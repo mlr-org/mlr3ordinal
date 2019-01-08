@@ -1,0 +1,46 @@
+Package: mlr3ordinal
+Title: Ordinal regression for mlr3
+Version: 0.1.0-9000
+Authors@R:
+    c(person(given = "Stefan",
+             family = "Coors",
+             role = c("cre", "aut"),
+             email = "mail@stefancoors.de",
+             comment = c(ORCID = "0000-0001-9754-0393")))
+Description: Provides extensions for ordinal regression for mlr3.
+    This includes a specialized task type, models, and measures.
+License: MIT + file LICENSE
+Depends:
+    R (>= 3.1.0)
+Imports:
+    R6,
+    checkmate,
+    data.table,
+    mlr3,
+    mlr3misc,
+    paradox,
+    ordinal
+Suggests:
+    Hmisc,
+    logger,
+    testthat
+Remotes:
+    mlr-org/mlr3misc,
+    mlr-org/mlr3,
+    mlr-org/paradox
+ByteCompile: true
+Encoding: UTF-8
+LazyData: true
+NeedsCompilation: no
+Roxygen: list(markdown = TRUE)
+URL: https://github.com/mlr-org/mlr3ordinal
+BugReports: https://github.com/mlr-org/mlr3ordinal/issues
+RoxygenNote: 6.1.1
+Collate:
+    'LearnerOrdinal.R'
+    'MeasureOrdinal.R'
+    'PredictionOrdinal.R'
+    'TaskOrdinal.R'
+    'mlr_learners_ordinal_clm.R'
+    'mlr_tasks_ordinal_wine.R'
+    'zzz.R'

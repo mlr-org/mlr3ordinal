@@ -1,0 +1,108 @@
+#' @title Prediction Object for Ordinal Regression
+#'
+#' @name PredictionOrdinal
+#' @format [R6Class] object inheriting from [Prediction].
+#' @description
+#' This object stores the predictions returned by a learner of class [LearnerOrdinal].
+#'
+#' @section Usage:
+#' Inherits from [Prediction]
+#' ```
+#' # Construction
+#' p = PredictionOrdinal$new(task, risk)
+#'
+#' # Members
+#' p$predict_types
+#' p$row_ids
+#' p$truth
+#'
+#' # S3 methods
+#' as.data.table(p)
+#' ```
+#'
+#' @section Arguments:
+#' * `task` ([Task]):
+#'   Task used for prediction. Used to extract `row_ids` and `truth`.
+#'   Set to `NULL` to skip all argument checks during initialization.
+#'   Slots `p$row_ids` and `p$truth` need to be set manually in this case.
+#' * `response` (`factor()` | `ordered()`): Vector of predicted class labels.
+#' * `prob` (`matrix`):
+#'   Numeric matrix of rank probabilities with one column for each rank in `task$all_classes`
+#'   and one row for each observation in the test set.
+#'
+#' @section Details:
+#' * `$new()` initializes a new object of class [Prediction].
+#' * `$predict_types` ([character]) stores the predict types available: a subset of `c("response", "prob")`.
+#' * `$response` stores the predicted values.
+#' * `row_ids` stores the row IDs.
+#' * `$truth` stores the true rank vector.
+#' * The prediction object can be transformed to a simple [data.table()]
+#'   with [data.table::as.data.table].
+#' @export
+#' @family Prediction
+#' @examples
+#' library(mlr3)
+#' task = mlr_tasks$get("wine")
+#' learner = mlr_learners$get("ordinal.clm")
+#' e = Experiment$new(task, learner)$train()$predict()
+#' p = e$prediction
+#' head(as.data.table(p))
+NULL
+
+PredictionOrdinal = R6Class("PredictionOrdinal", inherit = Prediction,
+  cloneable = FALSE,
+  public = list(
+    prob = NULL,
+    initialize = function(task = NULL, response = NULL, prob = NULL) {
+      predictionordinal_initialize(self, task, response, prob)
+    }
+  )
+)
+
+predictionordinal_initialize = function(self, task, response, prob) {
+  if (!is.null(task)) {
+    self$row_ids = row_ids = task$row_ids[[1L]]
+    self$truth = task$truth()
+    n = length(row_ids)
+    ranks = task$all_ranks
+
+    if (!is.null(response)) {
+      if (is.character(response))
+        response = factor(response, levels = ranks)
+      assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
+    }
+
+    if (!is.null(prob)) {
+      assert_matrix(prob, nrows = n, ncols = length(ranks))
+      assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1)
+      assert_names(colnames(prob), permutation.of = ranks)
+      if (is.null(rownames(prob)))
+        rownames(prob) = row_ids
+      self$prob = prob[, match(colnames(prob), ranks), drop = FALSE]
+    }
+
+    if (is.null(response) && !is.null(prob)) {
+      # calculate response from prob
+      response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks)
+    }
+  } else {
+    if (!is.null(response) && is.character(response))
+      response = factor(response)
+    assert_factor(response, any.missing = FALSE, null.ok = TRUE)
+    assert_matrix(prob, null.ok = TRUE)
+    assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
+  }
+
+  self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
+  self$response = response
+  self$prob = prob
+}
+
+#' @export
+as.data.table.PredictionOrdinal = function(x, ...) {
+  tab = as.data.table.Prediction(x)
+  if (!is.null(x$prob))
+    tab[, paste0("prob.", colnames(x$prob)) := as.data.table(x$prob)]
+  tab
+}
+
