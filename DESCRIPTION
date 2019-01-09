@@ -42,5 +42,6 @@ Collate:
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
     'mlr_learners_ordinal_clm.R'
+    'mlr_measures_mre.R'
     'mlr_tasks_ordinal_wine.R'
     'zzz.R'

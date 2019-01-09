@@ -21,7 +21,7 @@ NULL
   mlr_learners$add("ordinal.clm", LearnerOrdinalClm)
 
   # measures
-  # mlr_measures$add("?", MeasureOrdinal?)
+  mlr_measures$add("mre", MeasureOrdinalMRE)
 }
 
 if (FALSE) {

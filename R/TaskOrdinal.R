@@ -27,12 +27,14 @@ TaskOrdinal = R6Class("TaskOrdinal",
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
 
-      if (info$type != "factor" | info$type != "ordered")
+      if (info$type %nin% c("ordered", "factor"))
         stopf("Target column '%s' must be an ordered factor", target)
+      # if (info$type != "ordered")
+        # stopf("Target column '%s' must be an ordered factor", target)
       if (length(levels) < 2L)
         stopf("Target column '%s' must have at least two levels", target)
 
-      self$measures = list(mlr_measures$get("mmce"))
+      self$measures = list(mlr_measures$get("mre"))
     },
 
     truth = function(row_ids = NULL) {

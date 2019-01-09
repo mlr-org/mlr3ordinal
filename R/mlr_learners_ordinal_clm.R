@@ -11,9 +11,9 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
     initialize = function(id = "ordinal.clm") {
       super$initialize(
         id = id,
-        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        predict_types = c("reponse", "prob"),
         packages = "ordinal",
+        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
+        predict_types = c("response", "prob"),
         param_set = ParamSet$new(
           params = list(
             ParamFct$new(id = "link", default = "logit",
@@ -22,7 +22,7 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
               values = c("flexible", "symmetric", "symmetric2", "equidistant"), tags = "train")
           )
         ),
-        properties = "weights"
+        properties = c("weights")
       )
     },
 
