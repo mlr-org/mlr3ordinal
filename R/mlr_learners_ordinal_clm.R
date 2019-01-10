@@ -40,9 +40,11 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
       response = prob = NULL
 
       if (self$predict_type == "response") {
-        response = as.character(predict(self$model, newdata = newdata, type = "class"))
+        r = predict(self$model, newdata = newdata, type = "class")
+        response = as.character(r$fit)
       } else if (self$predict_type == "prob") {
-        prob = predict(self$model, newdata = newdata, type = "prob")
+        p = predict(self$model, newdata = newdata, type = "prob")
+        prob = p$fit
       }
 
       PredictionOrdinal$new(task, response, prob)
