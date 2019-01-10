@@ -22,7 +22,8 @@ MeasureOrdinalMRE = R6Class("MeasureOrdinalMRE",
 
     calculate = function(e) {
       p = e$prediction
-      Metrics::ce(actual = p$truth, predicted = p$response)
+      l = levels(p$truth)
+      Metrics::ce(actual = factor(as.character(p$truth), levels = l), predicted = p$response)
     }
   )
 )

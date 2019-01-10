@@ -100,7 +100,7 @@ predictionordinal_initialize = function(self, task, response, prob) {
 
 #' @export
 as.data.table.PredictionOrdinal = function(x, ...) {
-  tab = as.data.table.Prediction(x)
+  tab = data.table(row_id = x$row_ids, response = x$response, truth = x$truth)
   if (!is.null(x$prob))
     tab[, paste0("prob.", colnames(x$prob)) := as.data.table(x$prob)]
   tab
