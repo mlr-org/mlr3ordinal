@@ -34,7 +34,7 @@ TaskOrdinal = R6Class("TaskOrdinal",
       if (length(levels) < 2L)
         stopf("Target column '%s' must have at least two levels", target)
 
-      self$measures = list(mlr_measures$get("mre"))
+      self$measures = list(mlr_measures$get("mze"))
     },
 
     truth = function(row_ids = NULL) {
