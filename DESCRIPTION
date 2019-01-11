@@ -23,7 +23,8 @@ Imports:
 Suggests:
     Hmisc,
     logger,
-    testthat
+    testthat,
+    covr
 Remotes:
     mlr-org/mlr3misc,
     mlr-org/mlr3,
