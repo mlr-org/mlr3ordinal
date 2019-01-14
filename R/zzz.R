@@ -22,6 +22,7 @@ NULL
 
   # measures
   mlr_measures$add("ordinal.mmce", MeasureOrdinalMMCE)
+  mlr_measures$add("ordinal.acc", MeasureOrdinalACC)
 }
 
 if (FALSE) {
