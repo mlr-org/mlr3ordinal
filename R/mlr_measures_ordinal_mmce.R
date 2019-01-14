@@ -1,6 +1,6 @@
-#' @title Mean Zero-One Error Measure
+#' @title Mean Misclassification Error Measure
 #'
-#' @name mlr_measures_mze
+#' @name mlr_measures_ordinal_mmce
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
@@ -8,10 +8,10 @@
 #'
 #' @export
 #' @include MeasureOrdinal.R
-MeasureOrdinalMZE = R6Class("MeasureOrdinalMZE",
+MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
   inherit = MeasureOrdinal,
   public = list(
-    initialize = function(id = "mze") {
+    initialize = function(id = "ordinal.mmce") {
       super$initialize(
         id = id,
         range = 0:1,
