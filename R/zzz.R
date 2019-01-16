@@ -19,6 +19,8 @@ NULL
 
   # learners
   mlr_learners$add("ordinal.clm", LearnerOrdinalClm)
+  mlr_learners$add("ordinal.rpart", LearnerOrdinalRpart)
+
 
   # measures
   mlr_measures$add("ordinal.mmce", MeasureOrdinalMMCE)

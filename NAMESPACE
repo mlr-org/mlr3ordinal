@@ -3,6 +3,7 @@
 S3method(as.data.table,PredictionOrdinal)
 export(LearnerOrdinal)
 export(LearnerOrdinalClm)
+export(LearnerOrdinalRpart)
 export(MeasureOrdinal)
 export(MeasureOrdinalACC)
 export(MeasureOrdinalMMCE)
