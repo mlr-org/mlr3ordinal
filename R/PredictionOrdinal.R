@@ -54,7 +54,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal", inherit = Prediction,
   public = list(
     prob = NULL,
     initialize = function(task = NULL, response = NULL, prob = NULL) {
-      predictionordinal_initialize(self, task, response, prob)
+      predictionordinal_initialize(self, task, ranks, prob)
     }
   )
 )
@@ -67,6 +67,8 @@ predictionordinal_initialize = function(self, task, response, prob) {
     ranks = task$all_ranks
 
     if (!is.null(response)) {
+      if (is.numeric(response))
+        response = RegrToOrdinal(response, task)
       if (is.character(response))
         response = factor(response, levels = ranks)
       assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
