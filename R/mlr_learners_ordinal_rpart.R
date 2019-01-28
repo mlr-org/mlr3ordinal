@@ -31,7 +31,7 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
     },
 
     train = function(task) {
-      pars = self$params_train
+      pars = self$params("train")
       d = task$data()
       d[[task$target_names]] = as.integer(d[[task$target_names]])
       self$model = invoke(rpart::rpart, formula = task$formula, data = task$data(), .args = pars)
