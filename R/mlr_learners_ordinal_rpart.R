@@ -37,7 +37,7 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
       pars = self$params("train")
       d = task$data()
       d[[task$target_names]] = as.integer(d[[task$target_names]])
-      # resampling loop for threshold determination
+      # FIXME: resampling loop for threshold determination
       self$model = invoke(rpart::rpart, formula = task$formula, data = d, .args = pars)
       self
     },
