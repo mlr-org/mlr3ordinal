@@ -1,7 +1,7 @@
-context("ordinal.rpart")
+context("mlr_learners_ordinal_rpart")
 
 test_that("autotest", {
-  learner = LearnerOrdinalRpart$new()
-  result = run_autotest(learner, exclude = "(sanity)")
+  learner = mlr_learners$get("ordinal.rpart")
+  result = run_autotest(learner)
   expect_true(result, info = result$error)
 })

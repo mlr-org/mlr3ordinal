@@ -60,6 +60,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal", inherit = Prediction,
 )
 
 predictionordinal_initialize = function(self, task, response, prob) {
+  self$task_type = "ordinal"
   if (!is.null(task)) {
     self$row_ids = row_ids = task$row_ids
     self$truth = task$truth()
