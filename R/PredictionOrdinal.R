@@ -68,8 +68,6 @@ predictionordinal_initialize = function(self, task, response, prob) {
     ranks = task$all_ranks
 
     if (!is.null(response)) {
-      if (is.numeric(response))
-        response = RegrToOrdinal(response, task)
       if (is.character(response))
         response = factor(response, levels = ranks)
       assert_factor(response, len = n, levels = ranks, any.missing = FALSE)

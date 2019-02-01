@@ -29,7 +29,7 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
           )
         ),
         properties = "missings",
-        ordinal_threshold = NULL
+        threshold = NULL
       )
     },
 
@@ -45,6 +45,7 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
     predict = function(task) {
       newdata = task$data()
       response = predict(self$model, newdata = newdata)
+      response = set_ranks_ordinal(response, learner$threshold)
       PredictionOrdinal$new(task, response = response)
     }
   )
