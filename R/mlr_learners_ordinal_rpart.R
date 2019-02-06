@@ -23,8 +23,8 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
             ParamInt$new(id = "maxsurrogate", default = 5L, lower = 0L, tags = "train"),
             ParamInt$new(id = "maxdepth", default = 30L, lower = 1L, upper = 30L, tags = "train"),
             ParamInt$new(id = "xval", default = 10L, lower = 0L, tags = "train"),
-            ParamFct$new(id = "resample_train", default = "10CV", values = c("10CV", "5CV", "3CV", "Bootstrap"), tags = c("train")),
-            ParamFct$new(id = "resample_threshold", default = "10CV", values = c("10CV", "5CV", "3CV", "Bootstrap"), tags = c("train"))
+            ParamFct$new(id = "resample_train", default = "cv", values = c("cv", "holdout", "bootstrap", "subsampling", "repeated_cv"), tags = c("train")),
+            ParamFct$new(id = "resample_threshold", default = "bootstrap", values = c("cv", "holdout", "bootstrap", "subsampling", "repeated_cv"), tags = c("train"))
             # ParamDbl$new(id = "treshold", default = 0, lower = 0, upper = 1, tags = "test")
           )
         ),
@@ -34,10 +34,12 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
     },
 
     train = function(task) {
+      # extra resampling loop for threshold optimization
+      self$threshold = optimize_ordinal_threshold(self, task)
+      
       pars = self$params("train")
       d = task$data()
       d[[task$target_names]] = as.integer(d[[task$target_names]])
-      # FIXME: resampling loop for threshold determination
       self$model = invoke(rpart::rpart, formula = task$formula, data = d, .args = pars)
       self
     },

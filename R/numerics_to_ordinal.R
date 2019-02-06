@@ -1,3 +1,14 @@
+#' @title Optimization loop for obtaining optimal ordinal regression threshold
+optimize_ordinal_threshold = function(learner, task) {
+  pars = learner$params("train")
+  rt = mlr_resamplings$get(pars$resample_train)
+  task = convert_ordinal_task_to_regression(task)
+  rr = resample(task, learner, rt)
+  rth = 
+  
+  
+}
+
 #' @title Transformation of numeric response to ranks
 #'
 #' @name RegrToOrdinal.R
