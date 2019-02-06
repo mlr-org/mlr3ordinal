@@ -1,12 +1,21 @@
 #' @title Optimization loop for obtaining optimal ordinal regression threshold
 optimize_ordinal_threshold = function(learner, task) {
   pars = learner$params("train")
-  rt = mlr_resamplings$get(pars$resample_train)
-  task = convert_ordinal_task_to_regression(task)
-  rr = resample(task, learner, rt)
-  rth = 
-  
-  
+
+  if (is.null(pars$threshold_resample_folds))
+    pars$threshold_resample_folds = 5L
+  if (is.null(pars$threshold_resample_reps))
+    pars$threshold_resample_reps = 5L
+
+  rt = mlr_resamplings$get("repeated_cv")
+  rt$param_vals = list(
+    repeats = pars$threshold_resample_reps,
+    folds = pars$threshold_resample_folds
+  )
+
+  task_regr = convert_ordinal_task_to_regression(task)
+  rr = resample(task_regr, learner, rt)
+  rr
 }
 
 #' @title Transformation of numeric response to ranks
@@ -55,4 +64,12 @@ score_ordinal = function(task, prediction, truth) {
   enc = mlr3:::encapsulate("none")
   res = enc(score, list(), pkgs, seed = e$seeds[["score"]])
   return(res$result)
+}
+
+
+convert_ordinal_task_to_regression = function(task) {
+  d = task$data()
+  d[[task$target_names]] = as.integer(d[[task$target_names]])
+
+  TaskRegr$new(id = "threshold_task", backend = as_data_backend(data), target = task$target_names)
 }

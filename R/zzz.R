@@ -4,6 +4,7 @@
 #' @import mlr3misc
 #' @import paradox
 #' @import ordinal
+#' @import GenSA
 #' @importFrom R6 R6Class
 NULL
 
