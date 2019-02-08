@@ -8,20 +8,22 @@
 #' @export
 LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
   public = list(
-    initialize = function(id = "ordinal.clm") {
+    initialize = function(id = "ordinal.clm", param_vals = list(), predict_type = "response") {
       super$initialize(
         id = id,
         packages = "ordinal",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
+        predict_type = predict_type,
         predict_types = c("response", "prob"),
         param_set = ParamSet$new(
           params = list(
             ParamFct$new(id = "link", default = "logit",
-              values = c("logit", "probit", "cloglog", "loglog", "cauchit"), tags = "train"),
+              levels = c("logit", "probit", "cloglog", "loglog", "cauchit"), tags = "train"),
             ParamFct$new(id = "threshold", default = "flexible",
-              values = c("flexible", "symmetric", "symmetric2", "equidistant"), tags = "train")
+              levels = c("flexible", "symmetric", "symmetric2", "equidistant"), tags = "train")
           )
         ),
+        param_vals = param_vals,
         properties = c("weights")
       )
     },
