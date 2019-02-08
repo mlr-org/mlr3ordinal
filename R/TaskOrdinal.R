@@ -27,10 +27,8 @@ TaskOrdinal = R6Class("TaskOrdinal",
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
 
-      if (info$type %nin% c("ordered", "factor"))
+      if ("ordered" %nin% c(info$type))
         stopf("Target column '%s' must be an ordered factor", target)
-      # if (info$type != "ordered")
-        # stopf("Target column '%s' must be an ordered factor", target)
       if (length(levels) < 2L)
         stopf("Target column '%s' must have at least two levels", target)
 
@@ -39,11 +37,14 @@ TaskOrdinal = R6Class("TaskOrdinal",
 
     truth = function(row_ids = NULL) {
       res = self$data(row_ids, cols = self$target_names)[[1L]]
+      if (is.character(res))
+        res = factor(res, levels = self$all_classes)
+      res
     }
   ),
 
   active = list(
-    rank_names = function() as.character(unique(self$truth())),
+    rank_names = function() as.character(levels(self$truth())),
 
     rank_n = function() uniqueN(self$truth()),
 
