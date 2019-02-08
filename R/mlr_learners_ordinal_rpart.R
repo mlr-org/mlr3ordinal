@@ -36,7 +36,7 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
 
       # extra resampling loop for threshold optimization
       threshold_lrn = mlr_learners$get("regr.rpart")
-      threshold_lrn$param_set$values = pars
+      # threshold_lrn$param_set$values = pars
       self$threshold = optimize_ordinal_threshold(threshold_lrn, task)
 
       d = task$data()
