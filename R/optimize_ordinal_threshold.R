@@ -67,10 +67,9 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 }
 
 score_ordinal = function(task, prediction, truth) {
-  browser()
   measures = task$measures
   pkgs = unique(unlist(map(measures, "packages")))
-  e = list(prediction = prediction, truth = truth)
+  e = list(prediction = list(response = prediction, truth = truth))
   # call m$score with local encapsulation
   score = function() { set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures)) }
   enc = mlr3:::encapsulate("none")
