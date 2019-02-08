@@ -48,5 +48,5 @@ Collate:
     'mlr_measures_ordinal_acc.R'
     'mlr_measures_ordinal_mmce.R'
     'mlr_tasks_ordinal_wine.R'
-    'numerics_to_ordinal.R'
+    'optimize_ordinal_threshold.R'
     'zzz.R'

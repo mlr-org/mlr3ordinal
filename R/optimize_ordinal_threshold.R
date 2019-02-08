@@ -74,7 +74,7 @@ score_ordinal = function(task, prediction, truth) {
   # call m$score with local encapsulation
   score = function() { set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures)) }
   enc = mlr3:::encapsulate("none")
-  res = enc(score, list(), pkgs, seed = e$seeds[["score"]])
+  res = enc(score, list(), pkgs, seed = NA_integer_)#, seed = e$seeds[["score"]]
   return(res$result)
 }
 
