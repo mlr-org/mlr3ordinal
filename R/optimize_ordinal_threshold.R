@@ -17,7 +17,7 @@ optimize_ordinal_threshold = function(learner, task) {
   reps = pars$threshold_resample_reps
 
   rdesc = mlr_resamplings$get("repeated_cv")
-  rdesc$param_vals = list(
+  rdesc$param_set$values = list(
     repeats = pars$threshold_resample_reps,
     folds = pars$threshold_resample_folds
   )
