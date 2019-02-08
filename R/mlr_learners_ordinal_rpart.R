@@ -9,11 +9,10 @@
 #' @export
 LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
   public = list(
-    initialize = function(id = "ordinal.rpart", param_vals = list(), predict_type = "response") {
+    initialize = function(id = "ordinal.rpart") {
       super$initialize(
         id = id,
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        predict_type = predict_type,
         predict_types = "response",
         packages = "rpart",
         param_set = ParamSet$new(
@@ -28,7 +27,6 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
             ParamInt$new(id = "threshold_resample_reps", default = 5, lower = 1L, upper = 10L, tags = c("train"))
           )
         ),
-        param_vals = param_vals,
         properties = "missings"
       )
     },
