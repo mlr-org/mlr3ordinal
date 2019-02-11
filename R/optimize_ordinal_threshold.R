@@ -25,12 +25,12 @@ optimize_ordinal_threshold = function(learner, task) {
   task_regr = convert_ordinal_task_to_regression(task)
   rr = resample(task_regr, learner, rdesc, ctrl = list(store_prediction = TRUE))
 
-  t = NA
-  for (i in 1:reps) {
+  t = list()
+  for (i in 1:reps) { #FIXME: lapply
     e = rr$experiments(((i-1)*folds + 1):(folds*i))
     response = unname(unlist(lapply(e, function(x) {x$prediction$response})))
     truth = unlist(lapply(e, function(x) {x$prediction$truth}))
-    t[i] = optimize_ordinal_threshold_iteration(response, truth, task)
+    t[[i]] = optimize_ordinal_threshold_iteration(response, truth, task)
   }
   return(t)
 }
@@ -49,8 +49,7 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 
   fitn = function(x) {
     x = order(x)
-    # names(x) =
-    score_ordinal(task, set_ranks_ordinal(response, x), truth)
+    return(score_ordinal(task, set_ranks_ordinal(response, x), truth))
   }
 
   require_namespaces("GenSA")
@@ -58,10 +57,13 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 
   ctrl = list(smooth = FALSE, simple.function = TRUE, max.call = 3000L, temperature = 250,
     visiting.param = 2.5, acceptance.param = -15)
-  or = GenSA::GenSA(par = start, fn = fitn, lower = rep(min(response), k - 1),
-    upper = rep(max(response), k - 1), control = ctrl)
+  lower = rep(min(response), k - 1)
+  upper = rep(max(response), k - 1)
+  browser()
+  or = GenSA::GenSA(par = start, fn = fitn, lower = lower,
+    upper = upper, control = ctrl)
   th = or$par / sum(or$par)
-  names(th) = cls
+  # names(th) = cls
   perf = or$value
   return(th)
 }
@@ -69,11 +71,14 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 score_ordinal = function(task, prediction, truth) {
   measures = task$measures
   pkgs = unique(unlist(map(measures, "packages")))
-  e = list(prediction = list(response = prediction, truth = truth))
+  e = list(
+    prediction = list(response = prediction, truth = truth),
+    levels = task$all_ranks
+  )
   # call m$score with local encapsulation
   score = function() { set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures)) }
   enc = mlr3:::encapsulate("none")
-  res = enc(score, list(), pkgs, seed = NA_integer_)#, seed = e$seeds[["score"]]
+  res = enc(score, list(), pkgs)#, seed = e$seeds[["score"]]
   return(res$result)
 }
 

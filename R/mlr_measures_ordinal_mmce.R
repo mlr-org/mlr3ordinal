@@ -21,9 +21,15 @@ MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
     },
 
     calculate = function(e) {
-      p = e$prediction
-      l = levels(p$truth)
-      Metrics::ce(actual = factor(as.character(p$truth), levels = l), predicted = p$response)
+
+      if (is.null(e[["levels"]]))
+        levels = e$task$all_ranks
+      else
+        levels = e$levels
+
+      response = factor(e$prediction$response, levels = levels)
+      truth = factor(e$prediction$truth, levels = levels)
+      Metrics::ce(actual = truth, predicted = response)
     }
   )
 )
