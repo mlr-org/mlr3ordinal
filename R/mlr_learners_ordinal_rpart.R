@@ -31,13 +31,18 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
       )
     },
 
+    threshold = NULL,
+
     train = function(task) {
       pars = self$params("train")
 
       # extra resampling loop for threshold optimization
       threshold_lrn = mlr_learners$get("regr.rpart")
       # threshold_lrn$param_set$values = pars
-      self$threshold = optimize_ordinal_threshold(threshold_lrn, task)
+      self$threshold = optimize_ordinal_threshold(threshold_lrn, task,
+        ifelse(is.null(pars$threshold_resample_folds), 5L, pars$threshold_resample_folds),
+        ifelse(is.null(pars$threshold_resample_reps), 5L, pars$threshold_resample_reps)
+      )
 
       d = task$data()
       d[[task$target_names]] = as.integer(d[[task$target_names]])
@@ -48,7 +53,8 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
     predict = function(task) {
       newdata = task$data()
       response = predict(self$model, newdata = newdata)
-      response = set_ranks_ordinal(response, learner$threshold)
+      response = set_ranks_ordinal(response, self$threshold)
+      response = ordered(response, levels = task$all_ranks)
       PredictionOrdinal$new(task, response = response)
     }
   )
