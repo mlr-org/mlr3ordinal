@@ -50,11 +50,10 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 
   require_namespaces("GenSA")
   start = seq(1.5, (k-0.5))
-
   ctrl = list(smooth = FALSE, simple.function = TRUE, max.call = 3000L, temperature = 250,
     visiting.param = 2.5, acceptance.param = -15)
-  lower = rep(min(response), k - 1)
-  upper = rep(max(response), k - 1)
+  lower = rep(min(response) -1, k - 1)
+  upper = rep(max(response) + 1, k - 1)
   or = GenSA::GenSA(par = start, fn = fitn, lower = lower,
     upper = upper, control = ctrl)
   th = sort(or$par)
@@ -62,12 +61,12 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
   return(th)
 }
 
-score_ordinal = function(task, prediction, truth) {
+score_ordinal = function(task, response, truth) {
   measures = task$measures
   pkgs = unique(unlist(map(measures, "packages")))
   e = list(
-    prediction = list(response = prediction, truth = truth),
-    levels = task$all_ranks
+    prediction = list(response = response, truth = truth),
+    levels = as.integer(factor(task$all_ranks, levels = task$all_ranks))
   )
   # call m$score with local encapsulation
   score = function() { set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures)) }
