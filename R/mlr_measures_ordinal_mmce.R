@@ -21,7 +21,7 @@ MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
     },
 
     calculate = function(e) {
-      if (class(e) == "Experiment")
+      if ("Experiment" %in% class(e))
         levels = e$task$all_ranks
       else
         levels = e$levels

@@ -44,7 +44,8 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
   k = length(ranks)
 
   fitn = function(x) {
-    x = sort(x)
+    if (any(diff(x, lag = 1) <= 0))
+      return(1)
     return(score_ordinal(task, set_ranks_ordinal(response, x), truth)[[1]])
   }
 
@@ -76,8 +77,8 @@ score_ordinal = function(task, response, truth) {
 }
 
 set_ranks_ordinal = function(response, threshold) {
-  if (any(diff(threshold, lag = 1) <= 0))
-    threshold = sort(threshold)
+  # if (any(diff(threshold, lag = 1) <= 0))
+  #   threshold = sort(threshold)
   t = c(-Inf, threshold, Inf)
   as.numeric(cut(response, breaks = t))
 }
