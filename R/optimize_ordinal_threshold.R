@@ -1,10 +1,3 @@
-# @title Optimization loop for obtaining optimal ordinal regression threshold
-#
-# @name optimize_ordinal_threshold.R
-# @description
-# A funtion which uses predictions of any regression learner und tunes the threshold to get ordinal ranks.
-# Thresholding is done by [GenSA::GenSA()].
-#' @export
 optimize_ordinal_threshold = function(learner, task, threshold_resample_folds = 5L, threshold_resample_reps = 5L) {
 
   pars = learner$params("train")

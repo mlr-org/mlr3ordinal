@@ -26,8 +26,8 @@ MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
       else
         levels = e$levels
 
-      response = factor(e$prediction$response, levels = levels)
-      truth = factor(e$prediction$truth, levels = levels)
+      response = ordered(e$prediction$response, levels = levels)
+      truth = ordered(e$prediction$truth, levels = levels)
       Metrics::ce(actual = truth, predicted = response)
     }
   )
