@@ -10,7 +10,7 @@ This object stores the predictions returned by a learner of class \link{LearnerO
 \section{Usage}{
 
 Inherits from \link{Prediction}\preformatted{# Construction
-p = PredictionOrdinal$new(task, risk)
+p = PredictionOrdinal$new(task, response, prob)
 
 # Members
 p$predict_types

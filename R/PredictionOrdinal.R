@@ -9,7 +9,7 @@
 #' Inherits from [Prediction]
 #' ```
 #' # Construction
-#' p = PredictionOrdinal$new(task, risk)
+#' p = PredictionOrdinal$new(task, response, prob)
 #'
 #' # Members
 #' p$predict_types

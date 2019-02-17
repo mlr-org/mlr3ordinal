@@ -12,9 +12,9 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
     initialize = function(id = "ordinal.rpart") {
       super$initialize(
         id = id,
+        packages = "rpart",
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
         predict_types = "response",
-        packages = "rpart",
         param_set = ParamSet$new(
           params = list(
             ParamInt$new(id = "minsplit", default = 20L, lower = 1L, tags = c("train", "threshold")),
