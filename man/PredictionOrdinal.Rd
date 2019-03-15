@@ -31,7 +31,7 @@ Set to \code{NULL} to skip all argument checks during initialization.
 Slots \code{p$row_ids} and \code{p$truth} need to be set manually in this case.
 \item \code{response} (\code{factor()} | \code{ordered()}): Vector of predicted class labels.
 \item \code{prob} (\code{matrix}):
-Numeric matrix of rank probabilities with one column for each rank in \code{task$all_classes}
+Numeric matrix of rank probabilities with one column for each rank in \code{task$class_names}
 and one row for each observation in the test set.
 }
 }

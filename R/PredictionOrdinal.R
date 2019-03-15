@@ -27,7 +27,7 @@
 #'   Slots `p$row_ids` and `p$truth` need to be set manually in this case.
 #' * `response` (`factor()` | `ordered()`): Vector of predicted class labels.
 #' * `prob` (`matrix`):
-#'   Numeric matrix of rank probabilities with one column for each rank in `task$all_classes`
+#'   Numeric matrix of rank probabilities with one column for each rank in `task$class_names`
 #'   and one row for each observation in the test set.
 #'
 #' @section Details:

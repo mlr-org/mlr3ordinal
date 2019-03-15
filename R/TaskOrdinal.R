@@ -38,7 +38,7 @@ TaskOrdinal = R6Class("TaskOrdinal",
     truth = function(row_ids = NULL) {
       res = self$data(row_ids, cols = self$target_names)[[1L]]
       if (is.character(res))
-        res = factor(res, levels = self$all_classes)
+        res = factor(res, levels = self$class_names)
       res
     }
   ),
