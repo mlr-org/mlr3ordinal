@@ -9,7 +9,7 @@
 #' @export
 LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
   public = list(
-    initialize = function(id = "ordinal.rpart") {
+    initialize = function(id = "rpart") {
       super$initialize(
         id = id,
         packages = "rpart",
