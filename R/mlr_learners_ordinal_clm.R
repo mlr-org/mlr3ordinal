@@ -8,7 +8,7 @@
 #' @export
 LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
   public = list(
-    initialize = function(id = "clm") {
+    initialize = function(id = "ordinal.clm") {
       super$initialize(
         id = id,
         packages = "ordinal",
