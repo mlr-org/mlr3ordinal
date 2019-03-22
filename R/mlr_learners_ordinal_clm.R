@@ -29,7 +29,7 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
     train = function(task) {
       pars = self$params("train")
       self$model = invoke(ordinal::clm,
-        formula = task$formula,
+        formula = task$formula(),
         data = task$data(),
         .args = pars)
       self
