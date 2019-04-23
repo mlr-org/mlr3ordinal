@@ -20,14 +20,14 @@ MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
       )
     },
 
-    calculate = function(e) {
-      if ("Experiment" %in% class(e))
-        levels = e$task$all_ranks
+    calculate = function(experiment, prediction = experiment$prediction) {
+      if ("Experiment" %in% class(experiment))
+        levels = experiment$task$all_ranks
       else
-        levels = e$levels
+        levels = experiment$levels
 
-      response = ordered(e$prediction$response, levels = levels)
-      truth = ordered(e$prediction$truth, levels = levels)
+      response = ordered(prediction$response, levels = levels)
+      truth = ordered(prediction$truth, levels = levels)
       Metrics::ce(actual = truth, predicted = response)
     }
   )
