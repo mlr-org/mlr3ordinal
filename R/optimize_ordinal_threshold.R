@@ -38,13 +38,13 @@ optimize_ordinal_threshold_iteration = function(response, truth, task) {
 
   fitn = function(x) {
     if (any(diff(x, lag = 1) <= 0))
-      return(1)
+      return(Inf)
     return(score_ordinal(task, set_ranks_ordinal(response, x), truth)[[1]])
   }
 
   require_namespaces("GenSA")
   start = seq(1.5, (k-0.5))
-  ctrl = list(smooth = FALSE, simple.function = TRUE, max.call = 3000L, temperature = 250,
+  ctrl = list(smooth = FALSE, simple .function = TRUE, max.call = 3000L, temperature = 250,
     visiting.param = 2.5, acceptance.param = -15)
   lower = rep(min(response) -1, k - 1)
   upper = rep(max(response) + 1, k - 1)

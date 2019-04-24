@@ -6,7 +6,8 @@
 #' @import ordinal
 #' @import GenSA
 #' @importFrom R6 R6Class
-NULL
+#' @importFrom mlr3pipelines mlr_pipeops PipeOpPredPostproc PipeOpLearnerCV
+"_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
   # let mlr3 know about ordinal
@@ -26,7 +27,7 @@ NULL
   # measures
   mlr_measures$add("ordinal.mmce", MeasureOrdinalMMCE)
   mlr_measures$add("ordinal.acc", MeasureOrdinalACC)
-}
 
-if (FALSE) {
+  # pipeops
+  mlr_pipeops$add("PipeOpOrdinalRegression", PipeOpOrdinalRegression)
 }

@@ -18,6 +18,7 @@ Imports:
   data.table,
   mlr3,
   mlr3misc,
+  mlr3pipelines,
   paradox,
   ordinal,
   GenSA
@@ -25,10 +26,13 @@ Suggests:
   Hmisc,
   logger,
   testthat,
-  covr
+  covr,
+  evaluate,
+  rpart
 Remotes:
   mlr-org/mlr3misc,
   mlr-org/mlr3,
+  mlr-org/mlr3pipelines,
   mlr-org/paradox
 ByteCompile: true
 Encoding: UTF-8
@@ -41,6 +45,7 @@ RoxygenNote: 6.1.1
 Collate:
     'LearnerOrdinal.R'
     'MeasureOrdinal.R'
+    'PipeOpOrdinalRegression.R'
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
     'mlr_learners_ordinal_clm.R'
