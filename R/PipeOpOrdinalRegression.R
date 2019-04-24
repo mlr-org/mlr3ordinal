@@ -11,7 +11,7 @@
 #' Here, optimal thresholds are searched over different [`PredictionRegr`]s.
 #' Ordinal thresholds for each regression learner are optimized using (GenSA)[GenSA::GenSA].
 #' Returns a single [`PredictionOrdinal`].
-#' As a default, optimizes [`MeasureOrdinalMMCE`].
+#' As a default, optimizes [`MeasureOrdinalCE`].
 #' Used for regression [`Prediction`]s.
 #'
 #' @family PipeOps
@@ -50,7 +50,7 @@ PipeOpOrdinalRegression = R6Class("PipeOpOrdinalRegression",
       pred = private$make_prediction_regr(input[[1]])
       assert_class(pred, "PredictionRegr")
       self$measure = self$param_set$values$measure
-      if (is.null(self$measure)) self$measure = mlr_measures$get("ordinal.mmce")
+      if (is.null(self$measure)) self$measure = mlr_measures$get("ordinal.ce")
       assert_measure(self$measure)
       assert_true(self$measure$task_type == "regr")
       th = private$optimize_objfun_gensa(pred)

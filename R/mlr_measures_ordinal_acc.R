@@ -4,7 +4,7 @@
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
-#' Calls [Metrics::ce] for calculating the mean missclassification error. Resulting ACC = 1 - MMCE.
+#' Calls [Metrics::ce] for calculating the classification error. Resulting ACC = 1 - CE.
 #'
 #' @export
 #' @include MeasureOrdinal.R

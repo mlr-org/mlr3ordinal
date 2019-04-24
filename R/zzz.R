@@ -25,7 +25,7 @@
 
 
   # measures
-  mlr_measures$add("ordinal.mmce", MeasureOrdinalMMCE)
+  mlr_measures$add("ordinal.ce", MeasureOrdinalCE)
   mlr_measures$add("ordinal.acc", MeasureOrdinalACC)
 
   # pipeops

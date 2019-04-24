@@ -1,6 +1,6 @@
 #' @title Mean Misclassification Error Measure
 #'
-#' @name mlr_measures_ordinal_mmce
+#' @name mlr_measures_ordinal_ce
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
@@ -8,10 +8,10 @@
 #'
 #' @export
 #' @include MeasureOrdinal.R
-MeasureOrdinalMMCE = R6Class("MeasureOrdinaMMCE",
+MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
   inherit = MeasureOrdinal,
   public = list(
-    initialize = function(id = "ordinal.mmce") {
+    initialize = function(id = "ordinal.ce") {
       super$initialize(
         id = id,
         range = 0:1,
