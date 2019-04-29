@@ -10,6 +10,6 @@
 MeasureOrdinalACC
 }
 \description{
-Calls \link[Metrics:ce]{Metrics::ce} for calculating the mean missclassification error. Resulting ACC = 1 - MMCE.
+Calls \link[Metrics:ce]{Metrics::ce} for calculating the classification error. Resulting ACC = 1 - CE.
 }
 \keyword{datasets}

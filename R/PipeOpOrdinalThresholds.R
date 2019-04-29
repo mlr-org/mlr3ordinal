@@ -1,8 +1,8 @@
-#' @title PipeOpOrdinalRegression
+#' @title PipeOpOrdinalThresholds
 #'
-#' @format [R6Class] PipeOpOrdinalRegression
+#' @format [R6Class] PipeOpOrdinalThresholds
 #'
-#' @name mlr_pipeop_ordinalregression
+#' @name mlr_pipeop_ordinalthresholds
 #' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpPredPostproc`].
 #'
 #' @description
@@ -16,9 +16,9 @@
 #'
 #' @family PipeOps
 #' @examples
-#' op = PipeOpOrdinalRegression$new()
+#' op = PipeOpOrdinalThresholds$new()
 #' @export
-PipeOpOrdinalRegression = R6Class("PipeOpOrdinalRegression",
+PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
   inherit = PipeOpPredPostproc,
 
   public = list(
@@ -38,12 +38,12 @@ PipeOpOrdinalRegression = R6Class("PipeOpOrdinalRegression",
         ParamDbl$new("visiting.param", default = 2.5, lower = 0L, upper = Inf),
         ParamDbl$new("acceptance.param", default = -15, lower = -Inf, upper = Inf),
         ParamLgl$new("verbose", default = FALSE),
-        ParamLgl$new("simple.function", default = TRUE),
+        ParamLgl$new("simple.function", default = TRUE)
         # FIXME: Possibly implement more params, currently not important
       ))
       ps$values = list(measure = NULL, algorithm = "GenSA", smooth = FALSE,
         max.call = 3000L, temperature = 250, visiting.param = 2.5,
-        acceptance.param = -15, simple.function = TRUE, lower = 0, upper = 1)
+        acceptance.param = -15, simple.function = TRUE)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA")
     },
     train = function(input) {
@@ -65,7 +65,7 @@ PipeOpOrdinalRegression = R6Class("PipeOpOrdinalRegression",
   ),
   private = list(
     objfun = function(threshold, pred) {
-      pred$threshold = threshold / sum(threshold)
+      pred$threshold = threshold
       e = list("prediction" = pred)
       res = self$measure$calculate(e)
       if (!self$measure$minimize) res = -res
@@ -75,24 +75,29 @@ PipeOpOrdinalRegression = R6Class("PipeOpOrdinalRegression",
       requireNamespace("GenSA")
       pv = self$param_set$values
       ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
-      if (nclass > 2) {
-        # init_threshold = rep(1 / nclass, nclass)
-        # or = GenSA::GenSA(par = init_threshold, fn = private$objfun, pred = pred,
-        or = GenSA::GenSA(fn = private$objfun, pred = pred,
-        lower = rep(pv$lower, nclass), upper = rep(pv$upper, nclass), control = ctrl)
-        th = or$par / sum(or$par)
-        names(th) = cnames
-      } else if (nclass == 2) {
-        or = GenSA::GenSA(fn = private$objfun, pred = pred,
-          lower = pv$lower, upper = pv$upper, control = ctrl)
+        or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl)
         th = or$par
-      }
       return(th)
+    },
+    set_ranks_ordinal = function(response, threshold) {
+      # if (any(diff(threshold, lag = 1) <= 0))
+      #   threshold = sort(threshold)
+      t = c(-Inf, threshold, Inf)
+      as.numeric(cut(response, breaks = t))
     },
     # FIXME This is ugly, but currently the best way
     make_prediction_regr = function(input) {
       p = PredictionRegr$new()
-      p$response = response
+      p$response = input$data(cols = input$target_names)
+      p$truth = input$truth()
+      p$predict_types = "response"
+      p$row_ids = input$row_ids
+      return(p)
+    },
+    make_prediction_ordinal = function(input, threshold) {
+      p = PredictionRegr$new()
+      response = input$data(cols = input$target_names)
+      p$response = private$set_ranks_ordinal(response, threshold)
       p$truth = input$truth()
       p$predict_types = "response"
       p$row_ids = input$row_ids

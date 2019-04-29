@@ -4,9 +4,9 @@
 #' @import mlr3misc
 #' @import paradox
 #' @import ordinal
+#' @import mlr3pipelines
 #' @import GenSA
 #' @importFrom R6 R6Class
-#' @importFrom mlr3pipelines mlr_pipeops PipeOpPredPostproc PipeOpLearnerCV
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
@@ -29,5 +29,6 @@
   mlr_measures$add("ordinal.acc", MeasureOrdinalACC)
 
   # pipeops
-  mlr_pipeops$add("PipeOpOrdinalRegression", PipeOpOrdinalRegression)
+  mlr_pipeops$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
+  mlr_pipeops$add("convertordinaltask", PipeOpConvertOrdinalTask)
 }
