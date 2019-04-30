@@ -22,9 +22,23 @@ PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
     }
   ),
   private = list(
-    convert_task = function(task) {
+    convert_task_to_regression = function(task) {
       d = task$data()
       target_ordinal = d[[task$target_names]]
+      d[[task$target_names]] = as.integer(d[[task$target_names]])
+      d = cbind(d, target_ordinal)
+      new_task = TaskRegr$new(id = "threshold_task", backend = as_data_backend(d), target = task$target_names)
+      new_task$col_roles$target_ordinal = "target_ordinal"
+      new_task$col_roles$feature = setdiff(new_task$col_roles$feature, "target_ordinal")
+      new_task
+    },
+    convert_task_to_ordinal = function(task) {
+      new_task$data()
+      new_task$data(cols = task$col_roles$feature)
+      new_task$data(cols = task$col_roles$target)
+      new_task$data(cols = task$col_roles$target_ordinal)
+
+      target_ordinal = task$data(cols"target_ordinal")
       d[[task$target_names]] = as.integer(d[[task$target_names]])
       d = cbind(d, target_ordinal)
       new_task = TaskRegr$new(id = "threshold_task", backend = as_data_backend(d), target = task$target_names)

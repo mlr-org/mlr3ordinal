@@ -52,7 +52,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       self$measure = self$param_set$values$measure
       if (is.null(self$measure)) self$measure = mlr_measures$get("ordinal.ce")
       assert_measure(self$measure)
-      assert_true(self$measure$task_type == "regr")
+      assert_true(self$measure$task_type == "ordinal")
       th = private$optimize_objfun_gensa(pred)
       self$state = list("threshold" = th)
       return(list(NULL))
