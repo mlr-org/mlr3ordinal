@@ -11,30 +11,30 @@
 
 register_mlr3 = function() {
   # let mlr3 know about ordinal
-  x = getFromNamespace("mlr_reflections", ns = "mlr3")
+  x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_types = union(x$task_types, "ordinal")
   x$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
   x$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
   x$learner_predict_types$ordinal = c("response", "prob")
 
   # tasks
-  x = getFromNamespace("mlr_tasks", ns = "mlr3")
+  x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
   x$add("wine", load_wine)
 
   # learners
-  x = getFromNamespace("mlr_learners", ns = "mlr3")
+  x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
   x$add("ordinal.clm", LearnerOrdinalClm)
   x$add("ordinal.rpart", LearnerOrdinalRpart)
 
   # measures
-  x = getFromNamespace("mlr_measures", ns = "mlr3")
+  x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("ordinal.ce", MeasureOrdinalCE)
   x$add("ordinal.acc", MeasureOrdinalACC)
 }
 
 register_mlr3 = function() {
   # pipeops
-  x = getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
+  x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
   x$add("convertordinaltask", PipeOpConvertOrdinalTask)
 }
