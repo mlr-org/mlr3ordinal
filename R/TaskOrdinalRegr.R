@@ -44,13 +44,13 @@
 #' task$truth()
 #'
 #' # possible properties:
-#' mlr_reflections$task_properties$ordinalregr
+#' mlr_reflections$task_properties$regr
 TaskOrdinalRegr = R6Class("TaskOrdinalRegr",
   inherit = TaskRegr,
   public = list(
     initialize = function(id, backend, target) {
       assert_string(target)
-      if (is.factor(backend$data(rows = backend$rownames, cols = target)) {
+      if (is.factor(backend$data(rows = backend$rownames, cols = target)[[1L]])) {
         data = backend$data(rows = backend$rownames, cols = backend$colnames)
         target_ordinal = data[[target]]
         data[[target]] = as.numeric(data[[target]])
@@ -58,16 +58,13 @@ TaskOrdinalRegr = R6Class("TaskOrdinalRegr",
         backend = as_data_backend(data)
       }
 
-      super$initialize(id = id, task_type = "regr", backend = backend, target = target)
-      type = self$col_info[id == target]$type
+      super$initialize(id = id, backend = backend, target = target)
       self$set_col_role("target_ordinal", "target_ordinal")
-      if (type %nin% c("integer", "numeric"))
-        stopf("Target column '%s' must be numeric", target)
-      self$measures = list(mlr_measures$get("regr.mse"))
     },
 
-    truth = function(row_ids = NULL) {
-      self$data(row_ids, cols = self$target_names)[[1L]]
+    target_ordinal = function(row_ids = NULL) {
+      row_ids = ifelse(is.null(row_ids), self$row_ids, row_ids)
+      self$backend$data(rows = self$row_ids, cols = self$col_roles$target_ordinal)[[1L]]
     }
   )
 )

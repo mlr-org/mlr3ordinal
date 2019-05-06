@@ -49,6 +49,7 @@ Collate:
     'PipeOpOrdinalThresholds.R'
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
+    'TaskOrdinalRegr.R'
     'mlr_learners_ordinal_clm.R'
     'mlr_learners_ordinal_rpart.R'
     'mlr_measures_ordinal_acc.R'

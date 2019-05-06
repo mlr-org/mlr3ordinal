@@ -11,10 +11,11 @@
 
 .onLoad = function(libname, pkgname) {
   # let mlr3 know about ordinal
-  mlr_reflections$task_types = union(mlr_reflections$task_types, "ordinal")
+  mlr_reflections$task_types = union(mlr_reflections$task_types, c("ordinal"))
   mlr_reflections$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
   mlr_reflections$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
   mlr_reflections$learner_predict_types$ordinal = c("response", "prob")
+  mlr_reflections$task_col_roles$regr = union(mlr_reflections$task_col_roles$regr, "target_ordinal")
 
   # tasks
   mlr_tasks$add("wine", load_wine)
