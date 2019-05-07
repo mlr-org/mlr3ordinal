@@ -10,7 +10,7 @@
 PipeOpConvertOrdinalTask
 }
 \description{
-Converts an ordinal task to a regression one.
+Converts a task of type \link{Ordinal} to an \link{OrdinalRegr} one and vice versa.
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_ordinalthresholds}}

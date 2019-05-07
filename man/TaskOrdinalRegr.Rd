@@ -6,10 +6,10 @@
 \title{Ordinal Regression Task}
 \format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link{TaskRegr}/\link{Task}/\link{TaskSupervised}.}
 \description{
-This task specializes \link{Task} and \link{TaskSupervised} for ordinal regression problems.
+This task specializes \link[mlr3:Task]{mlr3::Task} and \link[mlr3:TaskSupervised]{mlr3::TaskSupervised} for ordinal regression problems.
 If the target column is an ordered factor, it is transformed to a numeric vector.
-The original orderd target is stored in the \link{DataBackend} with \link{col_role = "target_ordinal"}
-Predefined tasks are stored in \link{mlr_tasks}.
+The original orderd target is stored in the \link[mlr3:DataBackend]{mlr3::DataBackend} with \link{col_role = "target_ordinal"}
+Predefined tasks are stored in \link[mlr3:mlr_tasks]{mlr3::mlr_tasks}.
 
 The \code{task_type} is set to \code{"regr"}.
 }
@@ -24,17 +24,16 @@ Either a \link{DataBackend}, or any object which is convertible to a DataBackend
 E.g., a \code{data.frame()} will be converted to a \link{DataBackendDataTable}.
 \item \code{target} :: \code{character(1)}\cr
 Name of the target column.
-\item \code{target_ordinal} :: \code{character(1)}\cr
-Name of the original ordered target column.
 }
-}
-
-\section{Fields}{
-
 }
 
 \section{Methods}{
 
+\itemize{
+\item \code{target_ordinal(row_ids = NULL)} \cr
+(\code{integer()}) -> \code{self}\cr
+If applicable, the original ordered ordinal target variable is returned.
+}
 }
 
 \examples{
@@ -44,7 +43,7 @@ task$formula()
 task$truth()
 
 # possible properties:
-mlr_reflections$task_properties$ordinalregr
+mlr_reflections$task_properties$regr
 }
-\concept{Task}
+\concept{TaskRegr}
 \keyword{datasets}

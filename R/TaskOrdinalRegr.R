@@ -4,10 +4,10 @@
 #' @format [R6::R6Class] object inheriting from [TaskRegr]/[Task]/[TaskSupervised].
 #'
 #' @description
-#' This task specializes [Task] and [TaskSupervised] for ordinal regression problems.
+#' This task specializes [mlr3::Task] and [mlr3::TaskSupervised] for ordinal regression problems.
 #' If the target column is an ordered factor, it is transformed to a numeric vector.
-#' The original orderd target is stored in the [DataBackend] with [col_role = "target_ordinal"]
-#' Predefined tasks are stored in [mlr_tasks].
+#' The original orderd target is stored in the [mlr3::DataBackend] with [col_role = "target_ordinal"]
+#' Predefined tasks are stored in [mlr3::mlr_tasks].
 #'
 #' The `task_type` is set to `"regr"`.
 #'
@@ -26,16 +26,12 @@
 #' * `target` :: `character(1)`\cr
 #'   Name of the target column.
 #'
-#' * `target_ordinal` :: `character(1)`\cr
-#'   Name of the original ordered target column.
-#'
-#' @section Fields:
-#' @inheritSection Task Fields
-#'
 #' @section Methods:
-#' @inheritSection Task Methods
+#' * `target_ordinal(row_ids = NULL)` \cr
+#'   (`integer()`) -> `self`\cr
+#'   If applicable, the original ordered ordinal target variable is returned.
 #'
-#' @family Task
+#' @family TaskRegr
 #' @export
 #' @examples
 #' task = TaskOrdinalRegr$new("wine", backend = iris, target = "rating")
