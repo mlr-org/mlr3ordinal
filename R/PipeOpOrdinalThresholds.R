@@ -24,7 +24,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(id = "ordinalregression", param_vals = list()) {
+    initialize = function(task, id = "ordinalregression", param_vals = list()) {
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL),
         ParamFct$new("algorithm", default = "GenSA", levels = c("GenSA")),
@@ -46,7 +46,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         acceptance.param = -15, simple.function = TRUE)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA")
     },
-    train = function(input) {
+    train = function(input, task) {
       pred = private$make_prediction_regr(input[[1]])
       assert_class(pred, "PredictionRegr")
       self$measure = self$param_set$values$measure
@@ -57,7 +57,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       self$state = list("threshold" = th)
       return(list(NULL))
     },
-    predict = function(input) {#
+    predict = function(input, task) {#
       pred = private$make_prediction_regr(input[[1]])
       pred$threshold = self$state$threshold
       return(list(pred))
@@ -75,7 +75,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       requireNamespace("GenSA")
       pv = self$param_set$values
       ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
-        or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl)
+        or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl, lower = min(pred$re))
         th = or$par
       return(th)
     },
