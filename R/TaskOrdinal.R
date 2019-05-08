@@ -44,14 +44,10 @@ TaskOrdinal = R6Class("TaskOrdinal",
   ),
 
   active = list(
-    rank_names = function() as.character(levels(self$truth())),
+    rank_names = function() {
+      self$col_info[list(self$target_names), "levels", with = FALSE][[1L]][[1L]]
+    },
 
-    rank_n = function() uniqueN(self$truth()),
-
-    all_ranks = function() {
-      # TODO: this operation is slow for small data, and we do this quite often
-      # we might want to optimize here in the future
-      self$col_info[list(self$target_names), "levels", on = "id", nomatch = 0L, with = FALSE][[1L]][[1L]]
-    }
+    rank_n = function() uniqueN(self$truth())
   )
 )

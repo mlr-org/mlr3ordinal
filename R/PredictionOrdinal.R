@@ -49,23 +49,63 @@
 #' head(as.data.table(p))
 NULL
 
-PredictionOrdinal = R6Class("PredictionOrdinal", inherit = Prediction,
+PredictionOrdinal = R6Class("PredictionOrdinal",
+  inherit = Prediction,
   cloneable = FALSE,
   public = list(
     prob = NULL,
     initialize = function(task = NULL, response = NULL, prob = NULL) {
       predictionordinal_initialize(self, task, response, prob)
     }
+  ),
+
+  active = list(
+    threshold = function(rhs) {
+      if (missing(rhs))
+        return(private$.threshold)
+      if (!is.null(self$prob)) {
+        if (!is.matrix(self$prob))
+          stopf("Cannot set threshold, no probabilities available")
+        lvls = colnames(self$prob)
+
+        if (length(rhs) == 1L) {
+          if (length(lvls) != 2L)
+            stopf("Setting a single threshold only supported for binary classification problems")
+          assert_number(rhs, lower = 0, upper = 1)
+          ind = max.col(cbind(self$prob[, 1L], rhs), ties.method = "random")
+        } else {
+          assert_numeric(rhs, any.missing = FALSE, lower = 0, upper = 1, len = length(lvls))
+          assert_names(names(rhs), permutation.of = lvls)
+          rhs = rhs[lvls] # reorder rhs so it is in the same order as levels
+
+          # multiply all rows by threshold, then get index of max element per row
+          w = ifelse(rhs > 0, 1 / rhs, Inf)
+          ind = max.col(self$prob %*% diag(w), ties.method = "random")
+        }
+      } else if (is.numeric(self$response)) {
+
+      }
+      private$.threshold = rhs
+      self$response = factor(lvls[ind], levels = lvls)
+    },
+
+    confusion = function() {
+      table(response = self$response, truth = self$truth, useNA = "ifany")
+    }
+  ),
+
+  private = list(
+    .threshold = NULL
   )
 )
 
-predictionordinal_initialize = function(self, task, response, prob) {
+predictionordinal_initialize = function(self, task, response, prob, threshold) {
   self$task_type = "ordinal"
   if (!is.null(task)) {
     self$row_ids = row_ids = task$row_ids
     self$truth = task$truth()
     n = length(row_ids)
-    ranks = task$all_ranks
+    ranks = task$rank_names
 
     if (!is.null(response)) {
       if (is.character(response))
