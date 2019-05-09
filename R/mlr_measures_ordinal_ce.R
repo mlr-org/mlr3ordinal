@@ -21,14 +21,14 @@ MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
     },
 
     calculate = function(experiment, prediction = experiment$prediction) {
-      if ("Experiment" %in% class(experiment))
+      if ("Experiment" %in% class(experiment)) {
         levels = experiment$task$all_ranks
-      else
+      } else {
         levels = experiment$levels
+      }
 
       response = ordered(prediction$response, levels = levels)
       truth = ordered(prediction$truth, levels = levels)
       Metrics::ce(actual = truth, predicted = response)
-    }
-  )
+    })
 )

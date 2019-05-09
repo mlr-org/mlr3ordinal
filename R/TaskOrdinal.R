@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' library(mlr3)
-#' #...
+#' # ...
 NULL
 
 #' @export
@@ -27,21 +27,23 @@ TaskOrdinal = R6Class("TaskOrdinal",
       info = self$col_info[id == target]
       levels = info$levels[[1L]]
 
-      if ("ordered" %nin% c(info$type))
+      if ("ordered" %nin% c(info$type)) {
         stopf("Target column '%s' must be an ordered factor", target)
-      if (length(levels) < 2L)
+      }
+      if (length(levels) < 2L) {
         stopf("Target column '%s' must have at least two levels", target)
+      }
 
       self$measures = list(mlr_measures$get("ordinal.ce"))
     },
 
     truth = function(row_ids = NULL) {
       res = self$data(row_ids, cols = self$target_names)[[1L]]
-      if (is.character(res))
+      if (is.character(res)) {
         res = factor(res, levels = self$class_names)
+      }
       res
-    }
-  ),
+    }),
 
   active = list(
     rank_names = function() {

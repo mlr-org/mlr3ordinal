@@ -61,13 +61,12 @@ TaskOrdinalRegr = R6Class("TaskOrdinalRegr",
     target_ordinal = function(row_ids = NULL) {
       row_ids = ifelse(is.null(row_ids), self$row_ids, row_ids)
       self$backend$data(rows = self$row_ids, cols = self$col_roles$target_ordinal)[[1L]]
-    }
-  ),
+    }),
 
   active = list(
     rank_names = function() {
       self$col_info[list("target_ordinal"), "levels", with = FALSE][[1L]][[1L]]
-    },#  as.character(levels(self$target_ordinal())),
+    }, #  as.character(levels(self$target_ordinal())),
 
     rank_n = function() uniqueN(self$target_ordinal())
   )

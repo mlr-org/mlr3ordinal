@@ -28,6 +28,5 @@ LearnerOrdinal = R6Class("LearnerOrdinal", inherit = Learner,
         packages = packages, param_set = param_set, param_vals = param_vals, properties = properties)
       assert_subset(self$properties, mlr_reflections$learner_properties$ordinal)
       private$.predict_type = predict_types[1L]
-    }
-  )
+    })
 )

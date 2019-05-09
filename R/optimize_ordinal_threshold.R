@@ -14,10 +14,14 @@ optimize_ordinal_threshold = function(learner, task, threshold_resample_folds = 
   task_regr = convert_ordinal_task_to_regression(task)
   rr = resample(task_regr, learner, rdesc, ctrl = list(store_prediction = TRUE))
   t = list()
-  for (i in 1:reps) { #FIXME: lapply
-    e = rr$experiments(((i-1)*folds + 1):(folds*i))
-    response = unname(unlist(lapply(e, function(x) {x$prediction$response})))
-    truth = unlist(lapply(e, function(x) {x$prediction$truth}))
+  for (i in 1:reps) { # FIXME: lapply
+    e = rr$experiments(((i - 1) * folds + 1):(folds * i))
+    response = unname(unlist(lapply(e, function(x) {
+      x$prediction$response
+    })))
+    truth = unlist(lapply(e, function(x) {
+      x$prediction$truth
+    }))
     t[[i]] = optimize_ordinal_threshold_iteration(response, truth, task)
   }
   t = matrix(unlist(t), nrow = reps, byrow = TRUE)
@@ -33,20 +37,22 @@ convert_ordinal_task_to_regression = function(task) {
 }
 
 optimize_ordinal_threshold_iteration = function(response, truth, task) {
+
   ranks = task$all_ranks
   k = length(ranks)
 
   fitn = function(x) {
-    if (any(diff(x, lag = 1) <= 0))
+    if (any(diff(x, lag = 1) <= 0)) {
       return(Inf)
+    }
     return(score_ordinal(task, set_ranks_ordinal(response, x), truth)[[1]])
   }
 
   require_namespaces("GenSA")
-  start = seq(1.5, (k-0.5))
+  start = seq(1.5, (k - 0.5))
   ctrl = list(smooth = FALSE, simple.function = TRUE, max.call = 3000L, temperature = 250,
     visiting.param = 2.5, acceptance.param = -15)
-  lower = rep(min(response) -1, k - 1)
+  lower = rep(min(response) - 1, k - 1)
   upper = rep(max(response) + 1, k - 1)
   or = GenSA::GenSA(par = start, fn = fitn, lower = lower,
     upper = upper, control = ctrl)
@@ -63,9 +69,11 @@ score_ordinal = function(task, response, truth) {
     levels = as.integer(factor(task$all_ranks, levels = task$all_ranks))
   )
   # call m$score with local encapsulation
-  score = function() { set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures)) }
+  score = function() {
+    set_names(lapply(measures, function(m) m$calculate(e)), mlr3:::ids(measures))
+  }
   enc = mlr3:::encapsulate("none")
-  res = enc(score, list(), pkgs)#, seed = e$seeds[["score"]]
+  res = enc(score, list(), pkgs) # , seed = e$seeds[["score"]]
   return(res$result)
 }
 
@@ -75,7 +83,3 @@ set_ranks_ordinal = function(response, threshold) {
   t = c(-Inf, threshold, Inf)
   as.numeric(cut(response, breaks = t))
 }
-
-
-
-

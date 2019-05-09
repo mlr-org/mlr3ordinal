@@ -57,12 +57,12 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       self$state = list("threshold" = th)
       return(list(NULL))
     },
-    predict = function(input, task) {#
+    predict = function(input, task) {
+      #
       pred = private$make_prediction_regr(input[[1]])
       pred$threshold = self$state$threshold
       return(list(pred))
-    }
-  ),
+    }),
   private = list(
     objfun = function(threshold, pred) {
       pred$threshold = threshold
@@ -71,12 +71,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       if (!self$measure$minimize) res = -res
       res
     },
-    optimize_objfun_gensa = function(pred) { #
+    optimize_objfun_gensa = function(pred) {
+      #
       requireNamespace("GenSA")
       pv = self$param_set$values
       ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
-        or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl, lower = min(pred$re))
-        th = or$par
+      or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl, lower = min(pred$re))
+      th = or$par
       return(th)
     },
     set_ranks_ordinal = function(response, threshold) {
@@ -102,6 +103,5 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       p$predict_types = "response"
       p$row_ids = input$row_ids
       return(p)
-    }
-  )
+    })
 )
