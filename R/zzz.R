@@ -10,6 +10,7 @@
 "_PACKAGE"
 
 .onLoad = function(libname, pkgname) {
+
   # let mlr3 know about ordinal
   mlr_reflections$task_types = union(mlr_reflections$task_types, c("ordinal"))
   mlr_reflections$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")

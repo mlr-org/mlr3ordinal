@@ -19,8 +19,7 @@ PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
     },
     predict_task = function(task) {
       private$convert_task(task)
-    }
-  ),
+    }),
   private = list(
     convert_task = function(task) {
       if ("TaskOrdinal" %in% class(task)) {
@@ -37,6 +36,5 @@ PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
       d = task$data()
       d[[task$target_names]] = task$target_ordinal()
       TaskOrdinal$new(id = "ordinal_task", backend = as_data_backend(d), target = task$target_names)
-    }
-  )
+    })
 )

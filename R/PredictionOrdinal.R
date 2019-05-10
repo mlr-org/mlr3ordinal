@@ -56,21 +56,23 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
     prob = NULL,
     initialize = function(task = NULL, response = NULL, prob = NULL) {
       predictionordinal_initialize(self, task, response, prob)
-    }
-  ),
+    }),
 
   active = list(
     threshold = function(rhs) {
-      if (missing(rhs))
+      if (missing(rhs)) {
         return(private$.threshold)
+      }
       if (!is.null(self$prob)) {
-        if (!is.matrix(self$prob))
+        if (!is.matrix(self$prob)) {
           stopf("Cannot set threshold, no probabilities available")
+        }
         lvls = colnames(self$prob)
 
         if (length(rhs) == 1L) {
-          if (length(lvls) != 2L)
+          if (length(lvls) != 2L) {
             stopf("Setting a single threshold only supported for binary classification problems")
+          }
           assert_number(rhs, lower = 0, upper = 1)
           ind = max.col(cbind(self$prob[, 1L], rhs), ties.method = "random")
         } else {
@@ -91,8 +93,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
 
     confusion = function() {
       table(response = self$response, truth = self$truth, useNA = "ifany")
-    }
-  ),
+    }),
 
   private = list(
     .threshold = NULL
@@ -108,8 +109,9 @@ predictionordinal_initialize = function(self, task, response, prob, threshold) {
     ranks = task$rank_names
 
     if (!is.null(response)) {
-      if (is.character(response))
+      if (is.character(response)) {
         response = factor(response, levels = ranks)
+      }
       assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
     }
 
@@ -117,8 +119,9 @@ predictionordinal_initialize = function(self, task, response, prob, threshold) {
       assert_matrix(prob, nrows = n, ncols = length(ranks))
       assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1)
       assert_names(colnames(prob), permutation.of = ranks)
-      if (is.null(rownames(prob)))
+      if (is.null(rownames(prob))) {
         rownames(prob) = row_ids
+      }
       self$prob = prob[, match(colnames(prob), ranks), drop = FALSE]
     }
 
@@ -127,8 +130,9 @@ predictionordinal_initialize = function(self, task, response, prob, threshold) {
       response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks)
     }
   } else {
-    if (!is.null(response) && is.character(response))
+    if (!is.null(response) && is.character(response)) {
       response = factor(response)
+    }
     assert_factor(response, any.missing = FALSE, null.ok = TRUE)
     assert_matrix(prob, null.ok = TRUE)
     assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
@@ -142,8 +146,8 @@ predictionordinal_initialize = function(self, task, response, prob, threshold) {
 #' @export
 as.data.table.PredictionOrdinal = function(x, ...) {
   tab = data.table(row_id = x$row_ids, response = x$response, truth = x$truth)
-  if (!is.null(x$prob))
+  if (!is.null(x$prob)) {
     tab[, paste0("prob.", colnames(x$prob)) := as.data.table(x$prob)]
+  }
   tab
 }
-

@@ -48,6 +48,5 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
       }
 
       PredictionOrdinal$new(task, response, prob)
-    }
-  )
+    })
 )
