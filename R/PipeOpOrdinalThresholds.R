@@ -16,15 +16,16 @@
 #'
 #' @family PipeOps
 #' @examples
-#' op = PipeOpOrdinalThresholds$new()
+#' op = PipeOpOrdinalThresholds$new(2)
 #' @export
 PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
-  inherit = PipeOpPredPostproc,
+  inherit = PipeOp,
 
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(task, id = "ordinalregression", param_vals = list()) {
+    initialize = function(innum, id = "ordinalregression", param_vals = list()) {
+      assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL),
         ParamFct$new("algorithm", default = "GenSA", levels = c("GenSA")),
@@ -44,10 +45,14 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       ps$values = list(measure = NULL, algorithm = "GenSA", smooth = FALSE,
         max.call = 3000L, temperature = 250, visiting.param = 2.5,
         acceptance.param = -15, simple.function = TRUE)
-      super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA")
+      super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA",
+        input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "Task", predict = "Task"),
+        output = data.table(name = "output", train = "Task", predict = "Task")
+      )
     },
-    train = function(input, task) {
-      pred = private$make_prediction_regr(input[[1]])
+    train = function(inputs) {
+      browser()
+      pred = private$make_prediction_ordinal(inputs[[1L]])
       assert_class(pred, "PredictionRegr")
       self$measure = self$param_set$values$measure
       if (is.null(self$measure)) self$measure = mlr_measures$get("ordinal.ce")
@@ -57,9 +62,9 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       self$state = list("threshold" = th)
       return(list(NULL))
     },
-    predict = function(input, task) {
+    predict = function(inputs) {
       #
-      pred = private$make_prediction_regr(input[[1]])
+      pred = private$make_prediction_regr(inputs[[1L]])
       pred$threshold = self$state$threshold
       return(list(pred))
     }),
@@ -87,17 +92,17 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       as.numeric(cut(response, breaks = t))
     },
     # FIXME This is ugly, but currently the best way
-    make_prediction_regr = function(input) {
-      p = PredictionRegr$new()
-      p$response = input$data(cols = input$target_names)
-      p$truth = input$truth()
-      p$predict_types = "response"
-      p$row_ids = input$row_ids
-      return(p)
-    },
+    # make_prediction_ordinalregr = function(input) {
+      # p = PredictionRegr$new()
+      # p$response = input$data(cols = input$target_names)
+      # p$truth = input$truth()
+      # p$predict_types = "response"
+      # p$row_ids = input$row_ids
+      # return(p)
+    # },
     make_prediction_ordinal = function(input, threshold) {
-      p = PredictionRegr$new()
-      response = input$data(cols = input$target_names)
+      p = PredictionOrdinal$new()
+      response = input$data(cols = )
       p$response = private$set_ranks_ordinal(response, threshold)
       p$truth = input$truth()
       p$predict_types = "response"

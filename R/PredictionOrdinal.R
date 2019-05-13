@@ -63,6 +63,8 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
       if (missing(rhs)) {
         return(private$.threshold)
       }
+      if (!is.matrix(self$prob) && !is.numeric(self$response)) {
+
       if (!is.null(self$prob)) {
         if (!is.matrix(self$prob)) {
           stopf("Cannot set threshold, no probabilities available")
@@ -84,11 +86,12 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
           w = ifelse(rhs > 0, 1 / rhs, Inf)
           ind = max.col(self$prob %*% diag(w), ties.method = "random")
         }
+        private$.threshold = rhs
+        self$response = factor(lvls[ind], levels = lvls)
       } else if (is.numeric(self$response)) {
 
       }
       private$.threshold = rhs
-      self$response = factor(lvls[ind], levels = lvls)
     },
 
     confusion = function() {
@@ -96,11 +99,15 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
     }),
 
   private = list(
-    .threshold = NULL
+    set_ranks_ordinal = function(response) {
+      t = c(-Inf, private$.threshold, Inf)
+      as.numeric(cut(response, breaks = t))
+    },
+    .threshold = NULL,
   )
 )
 
-predictionordinal_initialize = function(self, task, response, prob, threshold) {
+predictionordinal_initialize = function(self, task, response, prob) {
   self$task_type = "ordinal"
   if (!is.null(task)) {
     self$row_ids = row_ids = task$row_ids
@@ -136,6 +143,9 @@ predictionordinal_initialize = function(self, task, response, prob, threshold) {
     assert_factor(response, any.missing = FALSE, null.ok = TRUE)
     assert_matrix(prob, null.ok = TRUE)
     assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
+  } else if (!is.null(response) && is.numeric(response)) {
+    ranks = self$set_ranks_ordinal(resonse)
+    response = factor(ranks, levels = )
   }
 
   self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
