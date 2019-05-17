@@ -51,11 +51,12 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       )
     },
     train = function(inputs) {
-      browser()
-      pred = private$make_prediction_ordinal(inputs[[1L]])
-      assert_class(pred, "PredictionRegr")
+      # browser()
+      pred = private$make_prediction_ordinal(inputs)
+      assert_class(pred, "PredictionOrdinal")
       self$measure = self$param_set$values$measure
-      if (is.null(self$measure)) self$measure = mlr_measures$get("ordinal.ce")
+      if (is.null(self$measure))
+        self$measure = mlr_measures$get("ordinal.ce")
       assert_measure(self$measure)
       assert_true(self$measure$task_type == "ordinal")
       th = private$optimize_objfun_gensa(pred)
@@ -64,13 +65,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
     },
     predict = function(inputs) {
       #
-      pred = private$make_prediction_regr(inputs[[1L]])
+      pred = private$make_prediction_ordinal(inputs[[1L]])
       pred$threshold = self$state$threshold
       return(list(pred))
     }),
   private = list(
     objfun = function(threshold, pred) {
-      pred$threshold = threshold
+      pred$threshold(threshold)
       e = list("prediction" = pred)
       res = self$measure$calculate(e)
       if (!self$measure$minimize) res = -res
@@ -81,7 +82,8 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       requireNamespace("GenSA")
       pv = self$param_set$values
       ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
-      or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl, lower = min(pred$re))
+      or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl,
+        lower = rep(min(pred$truth), nlevels(pred$truth) - 1), upper = rep(max(pred$truth), nlevels(pred$truth) - 1))
       th = or$par
       return(th)
     },
@@ -100,13 +102,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       # p$row_ids = input$row_ids
       # return(p)
     # },
-    make_prediction_ordinal = function(input, threshold) {
+    make_prediction_ordinal = function(inputs, threshold = NULL) {
       p = PredictionOrdinal$new()
-      response = input$data(cols = )
-      p$response = private$set_ranks_ordinal(response, threshold)
-      p$truth = input$truth()
+      p$response = inputs[[1L]]$data(cols = inputs[[1L]]$feature_names)[[1]]
+      # p$response = private$set_ranks_ordinal(response, threshold)
+      p$truth = inputs[[2L]]$truth()
       p$predict_types = "response"
-      p$row_ids = input$row_ids
+      p$row_ids = inputs[[2L]]$row_ids
       return(p)
     })
 )
