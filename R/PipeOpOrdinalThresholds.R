@@ -103,12 +103,14 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       # return(p)
     # },
     make_prediction_ordinal = function(inputs, threshold = NULL) {
-      p = PredictionOrdinal$new()
-      p$response = inputs[[1L]]$data(cols = inputs[[1L]]$feature_names)[[1]]
+      p = PredictionOrdinal$new(
+        task = inputs[[2]],
+        response = inputs[[1L]]$data(cols = inputs[[1L]]$feature_names)[[1]]
+        )
       # p$response = private$set_ranks_ordinal(response, threshold)
-      p$truth = inputs[[2L]]$truth()
-      p$predict_types = "response"
-      p$row_ids = inputs[[2L]]$row_ids
+      # p$truth = inputs[[2L]]$truth()
+      # p$predict_types = "response"
+      # p$row_ids = inputs[[2L]]$row_ids
       return(p)
     })
 )

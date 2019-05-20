@@ -55,11 +55,61 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
   public = list(
     prob = NULL,
     initialize = function(task = NULL, response = NULL, prob = NULL, threshold = NULL) {
-      predictionordinal_initialize(self, task, response, prob, threshold)
+      browser()
+      self$task_type = "ordinal"
+      if (!is.null(task)) {
+        self$row_ids = row_ids = task$row_ids
+        self$truth = task$truth()
+        n = length(row_ids)
+        ranks = task$rank_names
+
+      if (!is.null(response)) {
+        if (is.character(response)) {
+          response = factor(response, levels = ranks)
+        } else if (is.numeric(response)) {
+          if (is.null(threshold)) {
+            nranks = length(ranks)
+            threshold = c(as.numeric(ranks)[- nranks] + 0.5)
+          }
+          response = self$threshold(threshold)
+        }
+        assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
+      }
+
+      if (!is.null(prob)) {
+        assert_matrix(prob, nrows = n, ncols = length(ranks))
+        assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1)
+        assert_names(colnames(prob), permutation.of = ranks)
+        if (is.null(rownames(prob))) {
+          rownames(prob) = row_ids
+        }
+        self$prob = prob[, match(colnames(prob), ranks), drop = FALSE]
+      }
+
+      if (is.null(response) && !is.null(prob)) {
+        # calculate response from prob
+        response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks)
+      }
+    } else {
+      if (!is.null(response) && is.character(response)) {
+        response = factor(response)
+        assert_factor(response, any.missing = FALSE, null.ok = TRUE)
+        assert_matrix(prob, null.ok = TRUE)
+        assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
+      } else if (!is.null(response) && is.numeric(response)) {
+        response = self$set_ranks_ordinal(resonse)
+        response = factor(response, levels = ranks)
+      }
+    }
+
+    self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
+    self$response = response
+    self$prob = prob
     }),
 
   active = list(
     threshold = function(rhs) {
+      browser()
       if (missing(rhs)) {
         return(private$.threshold)
       }
@@ -90,82 +140,25 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
         private$.threshold = rhs
         self$response = factor(lvls[ind], levels = lvls)
       } else if (is.numeric(self$response)) {
-        self$response = set_ranks_ordinal(self$response)
+        private$.threshold = rhs
+        res = private$set_ranks_ordinal(self$response)
+        self$response = ordered(factor(res, levels = task$rank_names))
       }
       private$.threshold = rhs
     },
 
     confusion = function() {
       table(response = self$response, truth = self$truth, useNA = "ifany")
-    },
+    }),
+
+  private = list(
+    .threshold = NULL,
+
     set_ranks_ordinal = function(response) {
-      if (is.null(private$.threshold)) {
-        nranks = length(levels(self$truth))
-        threshold = c(as.numeric(task$ranks)[- nranks] + 0.5)
-      }
       t = c(-Inf, private$.threshold, Inf)
       as.numeric(cut(response, breaks = t))
-    },
-
-    .threshold = NULL
-  ),
+    })
 )
-
-predictionordinal_initialize = function(self, task, response, prob, threshold) {
-  browser()
-  self$task_type = "ordinal"
-  if (!is.null(task)) {
-    self$row_ids = row_ids = task$row_ids
-    self$truth = task$truth()
-    n = length(row_ids)
-    ranks = task$rank_names
-
-    if (!is.null(response)) {
-      if (is.character(response)) {
-        response = factor(response, levels = ranks)
-      } else if (is.numeric(response)) {
-        if (is.null(threshold)) {
-          nranks = length(ranks)
-          threshold = c(as.numeric(ranks)[- nranks] + 0.5)
-        }
-        self$.threshold = c(-Inf, threshold, Inf)
-        response = self$set_ranks_ordinal(resonse)
-        response = factor(response, levels = ranks)
-        reponse = factor(as.numeric(cut(response, breaks = t)), levels = ranks)
-      }
-      assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
-    }
-
-    if (!is.null(prob)) {
-      assert_matrix(prob, nrows = n, ncols = length(ranks))
-      assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1)
-      assert_names(colnames(prob), permutation.of = ranks)
-      if (is.null(rownames(prob))) {
-        rownames(prob) = row_ids
-      }
-      self$prob = prob[, match(colnames(prob), ranks), drop = FALSE]
-    }
-
-    if (is.null(response) && !is.null(prob)) {
-      # calculate response from prob
-      response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks)
-    }
-  } else {
-    if (!is.null(response) && is.character(response)) {
-      response = factor(response)
-      assert_factor(response, any.missing = FALSE, null.ok = TRUE)
-      assert_matrix(prob, null.ok = TRUE)
-      assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
-    } else if (!is.null(response) && is.numeric(response)) {
-      response = self$set_ranks_ordinal(resonse)
-      response = factor(response, levels = ranks)
-    }
-  }
-
-  self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
-  self$response = response
-  self$prob = prob
-}
 
 #' @export
 as.data.table.PredictionOrdinal = function(x, ...) {
