@@ -71,7 +71,9 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
             nranks = length(ranks)
             threshold = c(as.numeric(ranks)[- nranks] + 0.5)
           }
-          response = self$threshold(threshold)
+          self$response = response
+          self$threshold = threshold
+          response = self$response
         }
         assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
       }
