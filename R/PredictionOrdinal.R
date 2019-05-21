@@ -55,7 +55,6 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
   public = list(
     prob = NULL,
     initialize = function(task = NULL, response = NULL, prob = NULL, threshold = NULL) {
-      browser()
       self$task_type = "ordinal"
       if (!is.null(task)) {
         self$row_ids = row_ids = task$row_ids
@@ -111,7 +110,6 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
 
   active = list(
     threshold = function(rhs) {
-      browser()
       if (missing(rhs)) {
         return(private$.threshold)
       }
