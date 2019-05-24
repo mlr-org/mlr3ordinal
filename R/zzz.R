@@ -32,7 +32,7 @@ register_mlr3 = function() {
   x$add("ordinal.acc", MeasureOrdinalACC)
 }
 
-register_mlr3 = function() {
+register_mlr3pipelines = function() {
   # pipeops
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
