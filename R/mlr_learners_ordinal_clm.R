@@ -28,11 +28,14 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
 
     train = function(task) {
       pars = self$params("train")
-      self$model = invoke(ordinal::clm,
+      if ("weights" %in% task$properties) {
+        pars$weights = task$weights$weight
+      }
+
+      invoke(ordinal::clm,
         formula = task$formula(),
         data = task$data(),
         .args = pars)
-      self
     },
 
     predict = function(task) {
@@ -41,13 +44,12 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
 
       if (self$predict_type == "response") {
         r = predict(self$model, newdata = newdata, type = "class")
-        response = as.character(r$fit)
+        response = ordered(as.character(r$fit), levels = task$rank_names)
       } else if (self$predict_type == "prob") {
         p = predict(self$model, newdata = newdata, type = "prob")
         prob = p$fit
       }
 
-      PredictionOrdinal$new(task, response, prob)
-    }
-  )
+      list(response = response, prob = prob)
+    })
 )

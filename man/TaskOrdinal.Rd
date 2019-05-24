@@ -20,5 +20,5 @@ t = TaskSupervised$new(id, backend, target)
 
 \examples{
 library(mlr3)
-#...
+# ...
 }

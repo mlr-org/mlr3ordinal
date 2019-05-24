@@ -60,6 +60,5 @@ LearnerOrdinalRpart = R6Class("LearnerOrdinalRpart", inherit = LearnerOrdinal,
       lvl = ordered(ranks)
       response = ordered(response, levels = as.integer(lvl), labels = ranks)
       PredictionOrdinal$new(task, response = response)
-    }
-  )
+    })
 )

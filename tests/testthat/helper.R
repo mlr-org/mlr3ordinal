@@ -1,6 +1,7 @@
 lapply(list.files(system.file("testthat", package = "mlr3"), pattern = "^helper.*\\.[rR]", full.names = TRUE), source)
 
 generate_tasks.LearnerOrdinal = function(learner, N = 20L) {
+
   tasks = list()
   target = ordered(factor(rep_len(head(LETTERS, 3L), N)))
   data = cbind(data.table::data.table(target = target), generate_data(learner, N))
@@ -23,3 +24,8 @@ sanity_check.LearnerOrdinal = function(e) {
   e$performance <= 0.3
 }
 registerS3method("sanity_check", "LearnerOrdinal", sanity_check.LearnerOrdinal)
+
+expect_prediction_ordinal = function(p) {
+  expect_prediction(p)
+  expect_is(p, "PredictionOrdinal")
+}

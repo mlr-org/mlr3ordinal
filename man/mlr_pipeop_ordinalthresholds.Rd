@@ -19,7 +19,7 @@ As a default, optimizes \code{\link{MeasureOrdinalCE}}.
 Used for regression \code{\link{Prediction}}s.
 }
 \examples{
-op = PipeOpOrdinalThresholds$new()
+op = PipeOpOrdinalThresholds$new(2)
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_convertordinaltask}}
