@@ -24,3 +24,8 @@ sanity_check.LearnerOrdinal = function(e) {
   e$performance <= 0.3
 }
 registerS3method("sanity_check", "LearnerOrdinal", sanity_check.LearnerOrdinal)
+
+expect_prediction_ordinal = function(p) {
+  expect_prediction(p)
+  expect_is(p, "PredictionOrdinal")
+}

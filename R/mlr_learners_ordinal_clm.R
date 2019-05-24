@@ -44,7 +44,7 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
 
       if (self$predict_type == "response") {
         r = predict(self$model, newdata = newdata, type = "class")
-        response = as.character(r$fit)
+        response = ordered(as.character(r$fit), levels = task$rank_names)
       } else if (self$predict_type == "prob") {
         p = predict(self$model, newdata = newdata, type = "prob")
         prob = p$fit

@@ -54,13 +54,14 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
   cloneable = FALSE,
   public = list(
     prob = NULL,
-    initialize = function(task = NULL, response = NULL, prob = NULL, threshold = NULL) {
+    response = NULL,
+    initialize = function(row_ids, truth, response = NULL, prob = NULL, threshold = NULL) {
+      self$row_ids = assert_atomic_vector(row_ids)
+      self$truth = assert_factor(truth, ordered = TRUE, len = length(row_ids))
       self$task_type = "ordinal"
-      if (!is.null(task)) {
-        self$row_ids = row_ids = task$row_ids
-        self$truth = task$truth()
-        n = length(row_ids)
-        ranks = task$rank_names
+
+      n = length(row_ids)
+      ranks = levels(truth)
 
       if (!is.null(response)) {
         if (is.character(response)) {
@@ -71,10 +72,10 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
             threshold = c(as.numeric(ranks)[- nranks] + 0.5)
           }
           self$response = response
+          response = self$set_ranks_ordinal(resonse)
+          response = ordered(response, levels = ranks)
           self$threshold = threshold
-          response = self$response
         }
-        assert_factor(response, len = n, levels = ranks, any.missing = FALSE)
       }
 
       if (!is.null(prob)) {
@@ -84,29 +85,19 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
         if (is.null(rownames(prob))) {
           rownames(prob) = row_ids
         }
-        self$prob = prob[, match(colnames(prob), ranks), drop = FALSE]
+        prob = prob[, match(colnames(prob), ranks), drop = FALSE]
       }
 
       if (is.null(response) && !is.null(prob)) {
         # calculate response from prob
-        response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks)
+        response = factor(colnames(prob)[unname(apply(prob, 1L, which_max))], levels = ranks, ordered = TRUE)
       }
-    } else {
-      if (!is.null(response) && is.character(response)) {
-        response = factor(response)
-        assert_factor(response, any.missing = FALSE, null.ok = TRUE)
-        assert_matrix(prob, null.ok = TRUE)
-        assert_numeric(prob, any.missing = FALSE, lower = 0, upper = 1, null.ok = TRUE)
-      } else if (!is.null(response) && is.numeric(response)) {
-        response = self$set_ranks_ordinal(resonse)
-        response = factor(response, levels = ranks)
-      }
-    }
 
-    self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
-    self$response = response
-    self$prob = prob
-    }),
+      self$predict_types = c("response", "prob")[c(!is.null(response), !is.null(prob))]
+      self$response = assert_factor(response, ordered = TRUE, len = n, levels = ranks)
+      self$prob = prob
+    }
+  ),
 
   active = list(
     threshold = function(rhs) {
@@ -161,6 +152,28 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
 )
 
 #' @export
+convert_prediction.TaskOrdinal = function(task, predicted) {
+  n = task$nrow
+  if (!is.factor(predicted$response)) {
+    assert_numeric(predicted$response, len = n, any.missing = FALSE, null.ok = TRUE)
+  } else {
+    assert_factor(predicted$response, levels = task$rank_names, ordered = TRUE, len = n, any.missing = FALSE)
+  }
+  predicted
+}
+
+#' @export
+as_prediction.TaskOrdinal = function(task, row_ids, predicted) {
+  if (!is.null(predicted$prob)) {
+    PredictionOrdinal$new(row_ids = row_ids, truth = task$truth(row_ids),
+      response = predicted$response)
+  } else {
+    PredictionOrdinal$new(row_ids = row_ids, truth = task$truth(row_ids),
+      response = predicted$response, prob = predicted$prob)
+  }
+}
+
+#' @export
 as.data.table.PredictionOrdinal = function(x, ...) {
   tab = data.table(row_id = x$row_ids, response = x$response, truth = x$truth)
   if (!is.null(x$prob)) {
@@ -168,3 +181,25 @@ as.data.table.PredictionOrdinal = function(x, ...) {
   }
   tab
 }
+
+#' @export
+rbind.PredictionOrdinal = function(...) {
+  dots = list(...)
+  assert_list(dots, "PredictionOrdinal")
+
+  if (!is.null(p$prob)) {
+    x = map_dtr(dots, function(p) {
+      list(row_ids = p$row_ids, response = p$response, prob = p$prob)
+    }, .fill = FALSE)
+    PredictionOrdinal$new(row_ids = x$row_ids, truth = do.call(c, map(dots, "truth")),
+      response = x$response, prob = x$prob)
+  } else {
+    x = map_dtr(dots, function(p) {
+      list(row_ids = p$row_ids, response = p$response)
+    }, .fill = FALSE)
+    PredictionOrdinal$new(row_ids = x$row_ids, truth = do.call(c, map(dots, "truth")),
+      response = x$response)
+  }
+}
+
+
