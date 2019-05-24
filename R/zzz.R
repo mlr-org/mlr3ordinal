@@ -9,28 +9,51 @@
 #' @importFrom R6 R6Class
 "_PACKAGE"
 
-.onLoad = function(libname, pkgname) {
-
+register_mlr3 = function() {
   # let mlr3 know about ordinal
-  mlr_reflections$task_types = union(mlr_reflections$task_types, c("ordinal"))
-  mlr_reflections$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
-  mlr_reflections$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
-  mlr_reflections$learner_predict_types$ordinal = c("response", "prob")
-  mlr_reflections$task_col_roles$regr = union(mlr_reflections$task_col_roles$regr, "target_ordinal")
+  x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
+  x$task_types = union(x$task_types, "ordinal")
+  x$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
+  x$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
+  x$learner_predict_types$ordinal = c("response", "prob")
 
   # tasks
-  mlr_tasks$add("wine", load_wine)
+  x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
+  x$add("wine", load_wine)
 
   # learners
-  mlr_learners$add("ordinal.clm", LearnerOrdinalClm)
-  mlr_learners$add("ordinal.rpart", LearnerOrdinalRpart)
-
+  x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
+  x$add("ordinal.clm", LearnerOrdinalClm)
+  x$add("ordinal.rpart", LearnerOrdinalRpart)
 
   # measures
-  mlr_measures$add("ordinal.ce", MeasureOrdinalCE)
-  mlr_measures$add("ordinal.acc", MeasureOrdinalACC)
-
-  # pipeops
-  mlr_pipeops$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
-  mlr_pipeops$add("convertordinaltask", PipeOpConvertOrdinalTask)
+  x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
+  x$add("ordinal.ce", MeasureOrdinalCE)
+  x$add("ordinal.acc", MeasureOrdinalACC)
 }
+
+register_mlr3 = function() {
+  # pipeops
+  x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
+  x$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
+  x$add("convertordinaltask", PipeOpConvertOrdinalTask)
+}
+
+.onLoad = function(libname, pkgname) { # nocov start
+  register_mlr3()
+  setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
+  register_mlr3pipelines()
+  setHook(packageEvent("mlr3pipelines", "onLoad"), function(...) register_mlr3pipelines(), action = "append")
+} # nocov end
+
+.onUnload = function(libpath) { # nocov start
+  event = packageEvent("mlr3", "onLoad")
+  hooks = getHook(event)
+  pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
+  setHook(event, hooks[pkgname != "mlr3ordinal"], action = "replace")
+
+  event = packageEvent("mlr3pipelines", "onLoad")
+  hooks = getHook(event)
+  pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
+  setHook(event, hooks[pkgname != "mlr3ordinal"], action = "replace")
+} # nocov end
