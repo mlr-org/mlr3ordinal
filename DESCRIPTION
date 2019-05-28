@@ -24,7 +24,7 @@ Imports:
   GenSA
 Suggests:
   Hmisc,
-  logger,
+  lgr,
   testthat,
   covr,
   evaluate,
