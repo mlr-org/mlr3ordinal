@@ -11,9 +11,6 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
     initialize = function(id = "ordinal.clm") {
       super$initialize(
         id = id,
-        packages = "ordinal",
-        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
-        predict_types = c("response", "prob"),
         param_set = ParamSet$new(
           params = list(
             ParamFct$new(id = "link", default = "logit",
@@ -22,12 +19,16 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
               levels = c("flexible", "symmetric", "symmetric2", "equidistant"), tags = "train")
           )
         ),
-        properties = c("weights")
+        predict_types = c("response", "prob"),
+        feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
+        properties = c("weights"),
+        packages = "ordinal"
       )
     },
 
-    train = function(task) {
-      pars = self$params("train")
+    train_internal = function(task) {
+      pars = self$param_set$get_values(tags ="train")
+
       if ("weights" %in% task$properties) {
         pars$weights = task$weights$weight
       }
@@ -35,10 +36,11 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
       invoke(ordinal::clm,
         formula = task$formula(),
         data = task$data(),
-        .args = pars)
+        .args = pars
+      )
     },
 
-    predict = function(task) {
+    predict_internal = function(task) {
       newdata = task$data(cols = task$feature_names)
       response = prob = NULL
 

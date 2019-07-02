@@ -51,7 +51,6 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       )
     },
     train = function(inputs) {
-      browser()
       pred = private$make_prediction_ordinal(inputs)
       assert_class(pred, "PredictionOrdinal")
       self$measure = self$param_set$values$measure
@@ -65,14 +64,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
     },
     predict = function(inputs) {
       #
-      pred = private$make_prediction_ordinal(inputs[[1L]])
+      pred = private$make_prediction_ordinal(inputs)
       pred$threshold = self$state$threshold
       return(list(pred))
     }),
   private = list(
     objfun = function(threshold, pred) {
-      # browser()
-      pred$threshold = threshold
+      pred$set_threshold(threshold, levels(pred$truth))
       e = list("prediction" = pred)
       res = self$measure$calculate(e)
       if (!self$measure$minimize) res = -res
@@ -82,7 +80,10 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       requireNamespace("GenSA")
       pv = self$param_set$values
       ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
-      or = GenSA::GenSA(fn = private$objfun, pred = pred, control = ctrl,
+      ranks = levels(pred$truth)
+      nranks = length(ranks)
+      start = c(as.numeric(ranks)[- nranks] + 0.5)
+      or = GenSA::GenSA(start, fn = private$objfun, pred = pred, control = ctrl,
         lower = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
         upper = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1)))
       th = or$par
@@ -94,11 +95,12 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       t = c(-Inf, threshold, Inf)
       as.numeric(cut(response, breaks = t))
     },
-    make_prediction_ordinal = function(inputs, threshold = NULL) {
+    make_prediction_ordinal = function(tasks, threshold = NULL) {
       # browser()
       p = PredictionOrdinal$new(
-        task = inputs[[2]],
-        response = inputs[[1L]]$data(cols = inputs[[1L]]$feature_names)[[1]]
+        row_ids = tasks[[2]]$row_ids,
+        truth = tasks[[2]]$truth(),
+        response = tasks[[1]]$data(cols = tasks[[1]]$feature_names)[[1]]
       )
       return(p)
     })

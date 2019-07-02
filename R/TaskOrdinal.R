@@ -20,7 +20,6 @@ NULL
 TaskOrdinal = R6Class("TaskOrdinal",
   inherit = TaskSupervised,
   public = list(
-
     initialize = function(id, backend, target) {
       super$initialize(id = id, task_type = "ordinal", backend = backend, target = target)
 
@@ -33,17 +32,13 @@ TaskOrdinal = R6Class("TaskOrdinal",
       if (length(levels) < 2L) {
         stopf("Target column '%s' must have at least two levels", target)
       }
-
-      self$measures = list(mlr_measures$get("ordinal.ce"))
     },
 
     truth = function(row_ids = NULL) {
       res = self$data(row_ids, cols = self$target_names)[[1L]]
-      if (is.character(res)) {
-        res = factor(res, levels = self$class_names)
-      }
-      res
-    }),
+      as_factor(res, levels = self$rank_names, ordered = TRUE)
+    }
+  ),
 
   active = list(
     rank_names = function() {

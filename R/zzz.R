@@ -14,12 +14,15 @@ register_mlr3 = function() {
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
   x$task_types = union(x$task_types, "ordinal")
   x$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
+  x$learner_properties$ordinal = x$learner_properties$classif
+  x$task_properties$ordinal = c("weights")
   x$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
-  x$learner_predict_types$ordinal = c("response", "prob")
+  x$learner_predict_types$ordinal = list(response = "response", prob = c("response", "prob"))
+  x$task_col_roles$regr = union(x$task_col_roles$regr, "target_ordinal")
 
   # tasks
   x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
-  x$add("wine", load_wine)
+  x$add("winerating", load_task_winerating)
 
   # learners
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
