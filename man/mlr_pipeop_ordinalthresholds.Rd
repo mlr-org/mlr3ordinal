@@ -13,7 +13,7 @@ PipeOpOrdinalThresholds
 This PipeOp works for any regression learner.
 The idea is to predict numeric target values and optimizing ordinal class thresholds afterwards to label the predictions.
 Here, optimal thresholds are searched over different \code{\link{PredictionRegr}}s.
-Ordinal thresholds for each regression learner are optimized using (GenSA)\link[GenSA:GenSA]{GenSA::GenSA}.
+Ordinal thresholds for each regression learner are optimized using (nloptr)\link[nloptr:nloptr]{nloptr::nloptr}.
 Returns a single \code{\link{PredictionOrdinal}}.
 As a default, optimizes \code{\link{MeasureOrdinalCE}}.
 Used for regression \code{\link{Prediction}}s.

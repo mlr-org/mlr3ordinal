@@ -5,7 +5,7 @@
 #' @import paradox
 #' @import ordinal
 #' @import mlr3pipelines
-#' @import GenSA
+#' @import nloptr
 #' @importFrom R6 R6Class
 "_PACKAGE"
 

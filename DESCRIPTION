@@ -21,7 +21,7 @@ Imports:
   mlr3pipelines,
   paradox,
   ordinal,
-  GenSA
+  nloptr
 Suggests:
   Hmisc,
   lgr,

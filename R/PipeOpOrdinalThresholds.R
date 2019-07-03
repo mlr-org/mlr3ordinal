@@ -9,7 +9,7 @@
 #' This PipeOp works for any regression learner.
 #' The idea is to predict numeric target values and optimizing ordinal class thresholds afterwards to label the predictions.
 #' Here, optimal thresholds are searched over different [`PredictionRegr`]s.
-#' Ordinal thresholds for each regression learner are optimized using (GenSA)[GenSA::GenSA].
+#' Ordinal thresholds for each regression learner are optimized using (nloptr)[nloptr::nloptr].
 #' Returns a single [`PredictionOrdinal`].
 #' As a default, optimizes [`MeasureOrdinalCE`].
 #' Used for regression [`Prediction`]s.
@@ -28,24 +28,10 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL),
-        ParamFct$new("algorithm", default = "GenSA", levels = c("GenSA")),
-        ParamInt$new("maxit", default = 10000L, lower = 1L, upper = Inf),
-        ParamDbl$new("threshold.stop", default = NULL, lower = -Inf, upper = Inf, special_vals = list(NULL)),
-        ParamInt$new("nb.stop.improvement", default = NULL, lower = 0L, upper = Inf, special_vals = list(NULL)),
-        ParamLgl$new("smooth", default = FALSE),
-        ParamInt$new("max.call", default = 3000L, lower = 1L, upper = Inf),
-        ParamDbl$new("max.time", default = NULL, lower = 1L, upper = Inf, special_vals = list(NULL)),
-        ParamInt$new("temperature", default = 250L, lower = 1L, upper = Inf),
-        ParamDbl$new("visiting.param", default = 2.5, lower = 0L, upper = Inf),
-        ParamDbl$new("acceptance.param", default = -15, lower = -Inf, upper = Inf),
-        ParamLgl$new("verbose", default = FALSE),
-        ParamLgl$new("simple.function", default = TRUE)
-        # FIXME: Possibly implement more params, currently not important
+        ParamFct$new("algorithm", default = "nloptr", levels = c("nloptr"))
       ))
-      ps$values = list(measure = NULL, algorithm = "GenSA", smooth = FALSE,
-        max.call = 3000L, temperature = 250, visiting.param = 2.5,
-        acceptance.param = -15, simple.function = TRUE)
-      super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA",
+      ps$values = list(measure = NULL, algorithm = "nloptr")
+      super$initialize(id, param_vals = param_vals, param_set = ps, packages = "nloptr",
         input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "Task", predict = "Task"),
         output = data.table(name = "output", train = "NULL", predict = "Prediction")
       )
@@ -58,12 +44,11 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         self$measure = mlr_measures$get("ordinal.ce")
       assert_measure(self$measure)
       assert_true(self$measure$task_type == "ordinal")
-      th = private$optimize_objfun_gensa(pred)
+      th = private$optimize_objfun(pred)
       self$state = list("threshold" = th)
       return(list(NULL))
     },
     predict = function(inputs) {
-      browser()
       pred = private$make_prediction_ordinal(inputs)
       pred$set_threshold(self$state$threshold, inputs[[2]]$rank_names)
       return(list(pred))
@@ -71,22 +56,29 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
   private = list(
     objfun = function(threshold, pred) {
       pred$set_threshold(threshold, levels(pred$truth))
-      e = list("prediction" = pred)
-      res = self$measure$calculate(e)
+      res = pred$score()
       if (!self$measure$minimize) res = -res
       res
     },
-    optimize_objfun_gensa = function(pred) {
-      requireNamespace("GenSA")
+    optimize_objfun = function(pred) {
+      requireNamespace("nloptr")
       pv = self$param_set$values
-      ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
+      # ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
       ranks = levels(pred$truth)
       nranks = length(ranks)
       start = c(as.numeric(ranks)[- nranks] + 0.5)
-      or = GenSA::GenSA(start, fn = private$objfun, pred = pred, control = ctrl,
-        lower = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
-        upper = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1)))
+      constr_f = function(threshold) {
+        for (i in 2:length(threshold)) {
+          rbind(threshold[i] - threshold[i-1])
+        }
+       }
+      or = nloptr::nloptr(
+        x0 = start, eval_f = private$objfun, eval_g_ineq = constr_f, pred = pred,
+        lb = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
+        ub = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1))
+      )
       th = or$par
+      browser()
       return(th)
     },
     set_ranks_ordinal = function(response, threshold) {
