@@ -20,7 +20,7 @@ generate_tasks.LearnerOrdinal = function(learner, N = 20L) {
 }
 registerS3method("generate_tasks", "LearnerOrdinal", generate_tasks.LearnerOrdinal)
 
-sanity_check.PredictionOrdinal = function(e) {
+sanity_check.PredictionOrdinal = function(prediction) {
   prediction$score() <= 0.3
 }
 registerS3method("sanity_check", "PredictionOrdinal", sanity_check.PredictionOrdinal)
