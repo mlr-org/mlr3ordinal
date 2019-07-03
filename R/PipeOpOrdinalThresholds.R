@@ -54,8 +54,8 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       return(list(pred))
     }),
   private = list(
-    objfun = function(threshold, pred) {
-      pred$set_threshold(threshold, levels(pred$truth))
+    objfun = function(x0, pred) {
+      pred$set_threshold(x0, levels(pred$truth))
       res = pred$score()
       if (!self$measure$minimize) res = -res
       res
@@ -67,15 +67,16 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       ranks = levels(pred$truth)
       nranks = length(ranks)
       start = c(as.numeric(ranks)[- nranks] + 0.5)
-      constr_f = function(threshold) {
-        for (i in 2:length(threshold)) {
-          rbind(threshold[i] - threshold[i-1])
-        }
-       }
+      constr_fun = function(t) {
+        t[-1] - diff(t)
+      }
+      opts = list("algorithm"="NLOPT_LN_COBYLA",
+             "xtol_rel"=1.0e-8, "maxeval"= 2000)
       or = nloptr::nloptr(
-        x0 = start, eval_f = private$objfun, eval_g_ineq = constr_f, pred = pred,
+        x0 = start, eval_f = private$objfun, eval_g_ineq = constr_fun,
         lb = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
-        ub = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1))
+        ub = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1)),
+        opts = opts, pred = pred
       )
       th = or$par
       browser()
