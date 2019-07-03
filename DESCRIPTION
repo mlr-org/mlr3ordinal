@@ -45,7 +45,6 @@ RoxygenNote: 6.1.1
 Collate:
     'LearnerOrdinal.R'
     'LearnerOrdinalClm.R'
-    'LearnerOrdinalRpart.R'
     'MeasureOrdinal.R'
     'MeasureOrdinalACC.R'
     'MeasureOrdinalCE.R'

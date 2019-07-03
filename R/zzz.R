@@ -27,7 +27,6 @@ register_mlr3 = function() {
   # learners
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
   x$add("ordinal.clm", LearnerOrdinalClm)
-  x$add("ordinal.rpart", LearnerOrdinalRpart)
 
   # measures
   x = utils::getFromNamespace("mlr_measures", ns = "mlr3")

@@ -47,7 +47,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         acceptance.param = -15, simple.function = TRUE)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "GenSA",
         input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "Task", predict = "Task"),
-        output = data.table(name = "output", train = "NULL", predict = "Task")
+        output = data.table(name = "output", train = "NULL", predict = "Prediction")
       )
     },
     train = function(inputs) {
@@ -63,9 +63,9 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       return(list(NULL))
     },
     predict = function(inputs) {
-      #
+      browser()
       pred = private$make_prediction_ordinal(inputs)
-      pred$threshold = self$state$threshold
+      pred$set_threshold(self$state$threshold, inputs[[2]]$rank_names)
       return(list(pred))
     }),
   private = list(
