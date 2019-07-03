@@ -34,7 +34,11 @@
 #' @family TaskRegr
 #' @export
 #' @examples
-#' task = TaskOrdinalRegr$new("wine", backend = iris, target = "rating")
+#' library(mlr3)
+#' wine = mlr3misc::load_dataset("wine", package = "ordinal")
+#' wine$rating = ordered(wine$rating)
+#' b = as_data_backend(wine)
+#' task = TaskOrdinalRegr$new("winerating", backend = b, target = "rating")
 #' task$task_type
 #' task$formula()
 #' task$truth()

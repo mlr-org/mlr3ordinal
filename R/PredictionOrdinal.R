@@ -42,10 +42,9 @@
 #' @family Prediction
 #' @examples
 #' library(mlr3)
-#' task = mlr_tasks$get("wine")
+#' task = mlr_tasks$get("winerating")
 #' learner = mlr_learners$get("ordinal.clm")
-#' e = Experiment$new(task, learner)$train()$predict()
-#' p = e$prediction
+#' p = learner$train(task)$predict(task)
 #' head(as.data.table(p))
 NULL
 

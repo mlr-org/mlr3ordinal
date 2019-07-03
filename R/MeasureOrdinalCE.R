@@ -20,23 +20,9 @@ MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
       )
     },
 
-    calculate = function(experiment, prediction = experiment$prediction) {
-      if ("Experiment" %in% class(experiment)) {
-        levels = experiment$task$rank_names
-      } else {
-        levels = experiment$levels
-      }
-
-      if (!is.ordered(prediction$response) && !is.null(levels)) {
-        response = ordered(prediction$response, levels = levels)
-      } else {
-        response = prediction$response
-      }
-      if (!is.ordered(prediction$truth) && !is.null(levels)) {
-        truth = ordered(prediction$truth, levels = levels)
-      } else {
-        truth = prediction$truth
-      }
-      Metrics::ce(actual = truth, predicted = response)
-    })
+    score_internal = function(prediction, ...) {
+      l = levels(prediction$truth)
+      Metrics::ce(actual = factor(as.character(prediction$truth), levels = l), predicted = prediction$response)
+    }
+  )
 )

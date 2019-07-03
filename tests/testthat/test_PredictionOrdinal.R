@@ -2,7 +2,7 @@ context("PredictionOrdinal")
 
 test_that("Construction", {
   task = mlr_tasks$get("winerating")
-  p = PredictionOrdinal$new(row_ids = task$row_ids, truth = task$truth(), risk = runif(task$nrow))
+  p = PredictionOrdinal$new(row_ids = task$row_ids, truth = task$truth(), response = sample(task$truth))
   expect_prediction_ordinal(p)
 })
 
@@ -24,5 +24,5 @@ test_that("c", {
   expect_prediction_ordinal(pred)
 
   dt = as.data.table(pred)
-  expect_data_table(dt, nrow = task$nrow, ncol = 4L, any.missing = FALSE)
+  expect_data_table(dt, nrow = task$nrow, ncol = 3L, any.missing = FALSE)
 })
