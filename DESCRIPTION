@@ -6,7 +6,8 @@ Authors@R:
     family = "Coors",
     role = c("cre", "aut"),
     email = "mail@stefancoors.de",
-    comment = c(ORCID = "0000-0002-7465-2146")))
+    comment = c(ORCID = "0000-0002-7465-2146")),
+    person("Michel", "Lang", email = "michellang@gmail.com", role = "ctb"))
 Description: Provides extensions for ordinal regression for mlr3.
   This includes a specialized task type, models, and measures.
 License: MIT + file LICENSE
