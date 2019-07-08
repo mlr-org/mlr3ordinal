@@ -28,9 +28,12 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL),
-        ParamFct$new("algorithm", default = "nloptr", levels = c("nloptr"))
+        ParamFct$new("algorithm", default = "NLOPT_LN_COBYLA",
+          levels = c("NLOPT_LN_COBYLA")),
+        ParamDbl$new("xtol_rel", default = 1.0e-8, lower = 0L),
+        ParamInt$new("maxeval", default = 2000L, lower = 1L, upper = Inf)
       ))
-      ps$values = list(measure = NULL, algorithm = "nloptr")
+      ps$values = list(measure = NULL, algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1.0e-8, maxeval = 2000L)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "nloptr",
         input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "Task", predict = "Task"),
         output = data.table(name = "output", train = "NULL", predict = "Prediction")
@@ -64,15 +67,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       # browser()
       requireNamespace("nloptr")
       pv = self$param_set$values
-      # ctrl = pv[which(!(names(pv) %in% c("measure", "algorithm")))]
+      opts = pv[which(!(names(pv) %in% c("measure")))]
       ranks = levels(pred$truth)
       nranks = length(ranks)
       start = c(as.numeric(ranks)[- nranks] + 0.5)
       constr_fun = function(x, pred) {
         - diff(x)
       }
-      opts = list("algorithm"="NLOPT_LN_COBYLA",
-             "xtol_rel"=1.0e-8, "maxeval"= 2000)
       or = nloptr::nloptr(
         x0 = start, eval_f = private$objfun, pred = pred, eval_g_ineq = constr_fun,
         lb = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
