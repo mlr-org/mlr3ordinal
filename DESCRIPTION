@@ -51,6 +51,7 @@ Collate:
     'MeasureOrdinalCE.R'
     'PipeOpConvertOrdinalTask.R'
     'PipeOpOrdinalThresholds.R'
+    'PipelineOrdinalThreshold.R'
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
     'TaskOrdinalRegr.R'

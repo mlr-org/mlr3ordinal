@@ -20,4 +20,9 @@ Useful links:
 \author{
 \strong{Maintainer}: Stefan Coors \email{mail@stefancoors.de} (0000-0002-7465-2146)
 
+Other contributors:
+\itemize{
+  \item Michel Lang \email{michellang@gmail.com} [contributor]
+}
+
 }

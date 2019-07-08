@@ -24,7 +24,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(innum, id = "ordinalregression", param_vals = list()) {
+    initialize = function(innum, id = "OrdinalThresholds", param_vals = list()) {
       assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL),
