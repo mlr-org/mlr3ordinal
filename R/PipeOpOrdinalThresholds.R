@@ -33,7 +33,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         ParamDbl$new("xtol_rel", default = 1.0e-8, lower = 0L),
         ParamInt$new("maxeval", default = 2000L, lower = 1L, upper = Inf)
       ))
-      ps$values = list(measure = NULL, algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1.0e-8, maxeval = 2000L)
+      ps$values = list(measure = NULL, algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1.0e-8, maxeval = 5000L)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "nloptr",
         input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "Task", predict = "Task"),
         output = data.table(name = "output", train = "NULL", predict = "Prediction")
