@@ -4,7 +4,7 @@
 #' @format [`R6Class`] object inheriting from [`mlr3pipelines::Graph`].
 #'
 #' @description
-#' A pipeline that that takes any [`Regression Learner`][mlr3::LearnerRegr] to be used for [`TaskOrdianl`][TaskOrdianl].
+#' A pipeline that that takes any [`Regression Learner`][mlr3::LearnerRegr] to be used for [`TaskOrdinal`][TaskOrdinal].
 #'
 #' The result is a [`Graph`][mlr3pipelines::Graph] which works as regular learner when put into [`GraphLearner`][mlr3pipelines::GraphLearner].
 #' @export
@@ -15,14 +15,15 @@ PipelineOrdinalThreshold = R6Class("PipelineOrdinalThreshold",
       pipeline = PipeOpCopy$new(2) %>>%
         gunion(
           graphs = list(
-            PipeOpConvertOrdinalTask$new() %>>% PipeOpLearnerCV$new(learner),  # convertierung und regression
+            PipeOpConvertOrdinalTask$new(type = learner$task_type) %>>%
+              PipeOpLearnerCV$new(learner),  # convert task and crossvalidated predictions
             PipeOpNULL$new()
           ) # nichts passiert in branch 2
         ) %>>%
-        PipeOpOrdinalThresholds$new(2)  # thresholded mit dem feature das in PipeOpLearnerCV erstellt wurde, und potentiell auch mit anderen feats
-        self$pipeops = pipeline$pipeops
-        self$edges = pipeline$edges
-        self$keep_results = pipeline$keep_results
+        PipeOpOrdinalThresholds$new(2)  # thresholding on cv predictions
+      self$pipeops = pipeline$pipeops
+      self$edges = pipeline$edges
+      self$keep_results = pipeline$keep_results
     }
   )
 )

@@ -9,7 +9,7 @@
 PipelineOrdinalThreshold
 }
 \description{
-A pipeline that that takes any \code{\link[mlr3:LearnerRegr]{Regression Learner}} to be used for \code{\link{TaskOrdianl}}.
+A pipeline that that takes any \code{\link[mlr3:LearnerRegr]{Regression Learner}} to be used for \code{\link{TaskOrdinal}}.
 
 The result is a \code{\link[mlr3pipelines:Graph]{Graph}} which works as regular learner when put into \code{\link[mlr3pipelines:GraphLearner]{GraphLearner}}.
 }

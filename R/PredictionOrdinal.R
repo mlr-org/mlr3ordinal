@@ -52,7 +52,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
   inherit = Prediction,
   cloneable = FALSE,
   public = list(
-    initialize = function(row_ids, truth = NULL, response = NULL, prob = NULL) {
+    initialize = function(task = NULL, row_ids = task$row_ids, truth = task$truth(), response = NULL, prob = NULL) {
       self$data$row_ids = assert_atomic_vector(row_ids)
       self$data$truth = assert_factor(truth, ordered = TRUE)
       self$data$prob = assert_matrix(prob, null.ok = TRUE)
@@ -135,7 +135,7 @@ as.data.table.PredictionOrdinal = function(x, ...) {
   if (!is.null(data$prob)) {
     prob = as.data.table(data$prob)
     setnames(prob, names(prob), paste0("prob.", names(prob)))
-    tab = ref_cbind(tab, prob)
+    tab = rcbind(tab, prob)
   }
 
   tab

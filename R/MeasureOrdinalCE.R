@@ -1,6 +1,6 @@
 #' @title Mean Misclassification Error Measure
 #'
-#' @name mlr_measures_ordinal_ce
+#' @name mlr_measures_ordinal.ce
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description

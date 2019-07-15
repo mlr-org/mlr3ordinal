@@ -5,12 +5,12 @@
 \alias{mlr_pipeop_convertordinaltask}
 \alias{PipeOpConvertOrdinalTask}
 \title{PipeOpConvertOrdinalTask}
-\format{\code{\link{R6Class}} object inheriting from \code{\link{PipeOpTaskPreproc}}.}
+\format{\code{\link{R6Class}} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.}
 \usage{
 PipeOpConvertOrdinalTask
 }
 \description{
-Converts a task of type \link{Ordinal} to an \link{OrdinalRegr} one and vice versa.
+Converts an \link{TaskOrdinal} to an \link[mlr3:TaskRegr]{mlr3::TaskRegr} or \link[mlr3:TaskClassif]{mlr3::TaskClassif} one, depending on \code{type}.
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_ordinalthresholds}}

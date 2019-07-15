@@ -1,40 +1,44 @@
 #' @title PipeOpConvertOrdinalTask
 #'
 #' @name mlr_pipeop_convertordinaltask
-#' @format [`R6Class`] object inheriting from [`PipeOpTaskPreproc`].
+#' @format [`R6Class`] object inheriting from [mlr3pipelines::PipeOpTaskPreproc].
 #'
 #' @description
-#' Converts a task of type [Ordinal] to an [OrdinalRegr] one and vice versa.
+#' Converts an [TaskOrdinal] to an [mlr3::TaskRegr] or [mlr3::TaskClassif] one, depending on `type`.
 #'
 #' @family PipeOps
 #' @export
 PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
   inherit = PipeOpTaskPreproc,
   public = list(
-    initialize = function(id = "ConvertOrdinalTask", param_vals = list()) {
+    initialize = function(id = "ConvertOrdinalTask", param_vals = list(), type = NULL) {
       super$initialize(id = id, param_vals = param_vals)
+      self$type = type
     },
     train_task = function(task) {
       private$convert_task(task)
     },
     predict_task = function(task) {
       private$convert_task(task)
-    }),
+    },
+    type = NULL
+  ),
   private = list(
     convert_task = function(task) {
-      if ("TaskOrdinal" %in% class(task)) {
+      if (self$type == "regr") {
         private$convert_task_to_regression(task)
-      } else if ("TaskOrdinalRegr" %in% class(task)) {
-        private$convert_task_to_ordinal(task)
+      } else if (self$type == "classif") {
+        private$convert_task_to_classification(task)
       }
     },
     convert_task_to_regression = function(task) {
       d = task$data()
-      TaskOrdinalRegr$new(id = "threshold_task", backend = as_data_backend(d), target = task$target_names)
+      d[[task$target_names]] = as.numeric(d[[task$target_names]])
+      TaskRegr$new(id = task$id, backend = as_data_backend(d), target = task$target_names)
     },
-    convert_task_to_ordinal = function(task) {
+    convert_task_to_classification = function(task) {
       d = task$data()
-      d[[task$target_names]] = task$target_ordinal()
-      TaskOrdinal$new(id = "ordinal_task", backend = as_data_backend(d), target = task$target_names)
-    })
+      TaskClassif$new(id = task$id, backend = as_data_backend(d), target = task$target_names)
+    }
+  )
 )

@@ -54,7 +54,5 @@ Collate:
     'PipelineOrdinalThreshold.R'
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
-    'TaskOrdinalRegr.R'
     'TaskOrdinalWinerating.R'
-    'optimize_ordinal_threshold.R'
     'zzz.R'
