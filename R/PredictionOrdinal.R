@@ -53,10 +53,31 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
   cloneable = FALSE,
   public = list(
     initialize = function(task = NULL, row_ids = task$row_ids, truth = task$truth(), response = NULL, prob = NULL) {
-      self$data$row_ids = assert_atomic_vector(row_ids)
-      self$data$truth = assert_factor(truth, ordered = TRUE)
-      self$data$prob = assert_matrix(prob, null.ok = TRUE)
+      row_ids = assert_row_ids(row_ids)
+      n = length(row_ids)
+
+      truth = assert_factor(truth, len = n, null.ok = TRUE, ordered = TRUE)
+      ranks = levels(truth)
+
+      if (!is.null(prob)) {
+        assert_matrix(prob, nrows = n, ncols = length(ranks))
+        assert_numeric(prob, lower = 0, upper = 1)
+        assert_names(colnames(prob), permutation.of = ranks)
+        if (!is.null(rownames(prob))) {
+          rownames(prob) = NULL
+        }
+
+        if (is.null(response)) {
+          # calculate response from prob
+          i = max.col(prob, ties.method = "random")
+          response = factor(colnames(prob)[i], levels = ranks, ordered = TRUE)
+        }
+      }
+
+      self$data$row_ids = row_ids
+      self$data$truth = truth
       self$data$response = response
+      self$data$prob = prob
       self$task_type = "ordinal"
     },
 
@@ -66,6 +87,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
       # }
 
       if (!is.null(self$prob)) {
+        browser()
         if (!is.matrix(self$prob)) {
           stopf("Cannot set threshold, no probabilities available")
         }

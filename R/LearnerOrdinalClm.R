@@ -19,7 +19,7 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
               levels = c("flexible", "symmetric", "symmetric2", "equidistant"), tags = "train")
           )
         ),
-        predict_types = c("response"),#, "prob"),
+        predict_types = c("response", "prob"),
         feature_types = c("logical", "integer", "numeric", "character", "factor", "ordered"),
         properties = c("weights"),
         packages = "ordinal"
