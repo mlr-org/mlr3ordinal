@@ -17,7 +17,7 @@ PipelineOrdinalThreshold = R6Class("PipelineOrdinalThreshold",
           graphs = list(
             PipeOpConvertOrdinalTask$new(type = learner$task_type) %>>%
               PipeOpLearnerCV$new(learner),  # convert task and crossvalidated predictions
-            PipeOpNULL$new()
+            PipeOpNOP$new()
           ) # nichts passiert in branch 2
         ) %>>%
         PipeOpOrdinalThresholds$new(2)  # thresholding on cv predictions

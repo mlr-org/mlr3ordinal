@@ -12,7 +12,10 @@
 register_mlr3 = function() {
   # let mlr3 know about ordinal
   x = utils::getFromNamespace("mlr_reflections", ns = "mlr3")
-  x$task_types = union(x$task_types, "ordinal")
+  x$task_types = setkeyv(rbind(x$task_types, rowwise_table(
+    ~type,     ~package,      ~task,         ~learner,         ~prediction,         ~measure,
+    "ordinal", "mlr3ordinal", "TaskOrdinal", "LearnerOrdinal", "PredictionOrdinal", "MeasureOrdinal"
+  )), "type")
   x$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
   x$learner_properties$ordinal = x$learner_properties$classif
   x$task_properties$ordinal = c("weights")
