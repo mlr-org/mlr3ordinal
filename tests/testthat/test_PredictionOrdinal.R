@@ -16,7 +16,8 @@ test_that("Internally constructed Prediction", {
 test_that("c", {
   task = mlr_tasks$get("winerating")
   lrn = mlr_learners$get("ordinal.clm")
-  rr = resample(task, lrn, "cv3")
+  rsmp = rsmp("cv", folds = 3)
+  rr = resample(task, lrn, rsmp)
 
   preds = rr$predictions
 
