@@ -22,6 +22,7 @@ register_mlr3 = function() {
   x$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
   x$learner_predict_types$ordinal = list(response = "response", prob = c("response", "prob"))
   x$task_col_roles$regr = union(x$task_col_roles$regr, "target_ordinal")
+  x$measure_properties$ordinal = x$measure_properties$regr
   x$default_measures$ordinal = "ordinal.ce"
 
   # tasks
