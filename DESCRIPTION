@@ -49,6 +49,7 @@ Collate:
     'MeasureOrdinal.R'
     'MeasureOrdinalACC.R'
     'MeasureOrdinalCE.R'
+    'MeasureOrdinalMAE.R'
     'PipeOpConvertOrdinalTask.R'
     'PipeOpOrdinalThresholds.R'
     'PipelineOrdinalThreshold.R'

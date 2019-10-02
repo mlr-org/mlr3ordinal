@@ -37,12 +37,13 @@ register_mlr3 = function() {
   x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
   x$add("ordinal.ce", MeasureOrdinalCE)
   x$add("ordinal.acc", MeasureOrdinalACC)
+  x$add("ordinal.mae", MeasureOrdinalMAE)
 }
 
 register_mlr3pipelines = function() {
   # pipeops
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
-  x$add("PipeOpOrdinalThresholds", PipeOpOrdinalThresholds)
+  x$add("ordinalthresholds", PipeOpOrdinalThresholds)
   x$add("convertordinaltask", PipeOpConvertOrdinalTask)
 }
 

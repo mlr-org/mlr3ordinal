@@ -11,7 +11,7 @@
 PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
   inherit = PipeOpTaskPreproc,
   public = list(
-    initialize = function(id = "ConvertOrdinalTask", param_vals = list(), type = NULL) {
+    initialize = function(id = "convertordinaltask", param_vals = list(), type = NULL) {
       super$initialize(id = id, param_vals = param_vals)
       self$type = type
     },
