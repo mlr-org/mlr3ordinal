@@ -24,14 +24,14 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(innum, id = "OrdinalThresholds", param_vals = list()) {
+    initialize = function(innum, id = "ordinalthresholds", param_vals = list()) {
       assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
-        ParamUty$new("measure", default = NULL),
+        ParamUty$new("measure", default = NULL, tags = "train"),
         ParamFct$new("algorithm", default = "NLOPT_LN_COBYLA",
-          levels = c("NLOPT_LN_COBYLA")),
-        ParamDbl$new("xtol_rel", default = 1.0e-8, lower = 0L),
-        ParamInt$new("maxeval", default = 2000L, lower = 1L, upper = Inf)
+          levels = c("NLOPT_LN_COBYLA"), tags = "train"),
+        ParamDbl$new("xtol_rel", default = 1.0e-8, lower = 0L, tags = "train"),
+        ParamInt$new("maxeval", default = 2000L, lower = 1L, upper = Inf, tags = "train")
       ))
       ps$values = list(measure = NULL, algorithm = "NLOPT_LN_COBYLA", xtol_rel = 1.0e-8, maxeval = 5000L)
       super$initialize(id, param_vals = param_vals, param_set = ps, packages = "nloptr",

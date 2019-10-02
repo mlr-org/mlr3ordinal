@@ -15,14 +15,14 @@ MeasureOrdinalACC = R6Class("MeasureOrdinaACC",
       super$initialize(
         id = id,
         range = 0:1,
-        minimize = TRUE,
+        minimize = FALSE,
         packages = "Metrics"
       )
     },
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      1 - Metrics::ce(actual = factor(as.character(prediction$truth), levels = l, ordered = TRUE), predicted = prediction$response)
+      Metrics::accuracy(actual = factor(as.character(prediction$truth), levels = l, ordered = TRUE), predicted = prediction$response)
     }
   )
 )
