@@ -13,7 +13,8 @@
 #'
 #' @family PipeOps
 #' @examples
-#' op = PipeOpOrdinalClassif$new(2)
+#' library(mlr3pipelines)
+#' op = po("ordinalclassif")
 #' @export
 PipeOpOrdinalClassif = R6Class("PipeOpOrdinalClassif",
   inherit = PipeOp,

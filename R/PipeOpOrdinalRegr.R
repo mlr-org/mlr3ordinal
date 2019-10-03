@@ -15,7 +15,8 @@
 #'
 #' @family PipeOps
 #' @examples
-#' op = PipeOpOrdinalRegr$new(2)
+#' library(mlr3pipelines)
+#' op = po("ordinalregr", 2)
 #' @export
 PipeOpOrdinalRegr = R6Class("PipeOpOrdinalRegr",
   inherit = PipeOp,

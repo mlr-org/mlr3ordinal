@@ -11,7 +11,8 @@
 #' @export
 #'
 #' @examples
-#' library(mlr3ordinal)
+#' library(mlr3)
+#' library(mlr3pipelines)
 #' task = tsk("winerating")
 #' learner = lrn("regr.rpart")
 #' graph = PipelineOrdinal(learner)

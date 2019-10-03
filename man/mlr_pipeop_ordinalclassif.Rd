@@ -16,7 +16,8 @@ Returns a single \code{\link{PredictionOrdinal}}.
 As a default, optimizes \code{\link{MeasureOrdinalCE}}.
 }
 \examples{
-op = PipeOpOrdinalClassif$new(2)
+library(mlr3pipelines)
+op = po("ordinalclassif")
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_convertordinaltask}},

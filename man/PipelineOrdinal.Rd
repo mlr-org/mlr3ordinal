@@ -17,7 +17,8 @@ The resulting graph can used as \code{\link[mlr3pipelines:GraphLearner]{GraphLea
 Creates a graph of an ordinal regression pipeline for a regression or classification learner
 }
 \examples{
-library(mlr3ordinal)
+library(mlr3)
+library(mlr3pipelines)
 task = tsk("winerating")
 learner = lrn("regr.rpart")
 graph = PipelineOrdinal(learner)

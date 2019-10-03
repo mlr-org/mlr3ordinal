@@ -18,7 +18,8 @@ As a default, optimizes \code{\link{MeasureOrdinalCE}}.
 Used for regression \code{\link{Prediction}}s.
 }
 \examples{
-op = PipeOpOrdinalRegr$new(2)
+library(mlr3pipelines)
+op = po("ordinalregr", 2)
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_convertordinaltask}},
