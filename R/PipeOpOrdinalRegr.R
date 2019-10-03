@@ -1,30 +1,29 @@
-#' @title PipeOpOrdinalThresholds
+#' @title PipeOpOrdinalRegr
 #'
-#' @format [R6Class] PipeOpOrdinalThresholds
+#' @format [R6Class] PipeOpOrdinalRegr
 #'
-#' @name mlr_pipeop_ordinalthresholds
+#' @name mlr_pipeop_ordinalregr
 #' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpPredPostproc`].
 #'
 #' @description
 #' This PipeOp works for any regression learner.
-#' The idea is to predict numeric target values and optimizing ordinal class thresholds afterwards to label the predictions.
-#' Here, optimal thresholds are searched over different [`PredictionRegr`]s.
-#' Ordinal thresholds for each regression learner are optimized using (nloptr)[nloptr::nloptr].
+#' The idea is to consider the whole task as a [`Regression Task`][mlr3::TaskRegr].
+#' Hence, a numeric response vector is predicted for which crossvalidated rank thresholds are found using (nloptr)[nloptr::nloptr] to rank the predictions.
 #' Returns a single [`PredictionOrdinal`].
 #' As a default, optimizes [`MeasureOrdinalCE`].
 #' Used for regression [`Prediction`]s.
 #'
 #' @family PipeOps
 #' @examples
-#' op = PipeOpOrdinalThresholds$new(2)
+#' op = PipeOpOrdinalRegr$new(2)
 #' @export
-PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
+PipeOpOrdinalRegr = R6Class("PipeOpOrdinalRegr",
   inherit = PipeOp,
 
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(innum, id = "ordinalthresholds", param_vals = list()) {
+    initialize = function(innum, id = "ordinalregr", param_vals = list()) {
       assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL, tags = "train"),
@@ -39,6 +38,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         output = data.table(name = "output", train = "NULL", predict = "Prediction")
       )
     },
+
     train = function(inputs) {
       pred = private$make_prediction_ordinal(inputs)
       assert_class(pred, "PredictionOrdinal")
@@ -51,11 +51,13 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       self$state = list("threshold" = th)
       return(list(NULL))
     },
+
     predict = function(inputs) {
       pred = private$make_prediction_ordinal(inputs)
       pred$set_threshold(self$state$threshold, inputs[[2]]$rank_names)
       return(list(pred))
     }),
+
   private = list(
     objfun = function(x, pred) {
       pred$set_threshold(x, levels(pred$truth))
@@ -63,6 +65,7 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       if (!self$measure$minimize) res = -res
       res
     },
+
     optimize_objfun = function(pred) {
       # browser()
       requireNamespace("nloptr")
@@ -83,12 +86,14 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
       th = or$solution
       return(th)
     },
+
     set_ranks_ordinal = function(response, threshold) {
       # if (any(diff(threshold, lag = 1) <= 0))
       #   threshold = sort(threshold)
       t = c(-Inf, threshold, Inf)
       as.numeric(cut(response, breaks = t))
     },
+
     make_prediction_ordinal = function(tasks, threshold = NULL) {
       p = PredictionOrdinal$new(
         row_ids = tasks[[2]]$row_ids,
@@ -96,5 +101,6 @@ PipeOpOrdinalThresholds = R6Class("PipeOpOrdinalThresholds",
         response = tasks[[1]]$data(cols = tasks[[1]]$feature_names)[[1]]
       )
       return(p)
-    })
+    }
+  )
 )

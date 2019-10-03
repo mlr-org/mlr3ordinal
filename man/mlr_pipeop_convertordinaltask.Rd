@@ -13,7 +13,8 @@ PipeOpConvertOrdinalTask
 Converts an \link{TaskOrdinal} to an \link[mlr3:TaskRegr]{mlr3::TaskRegr} or \link[mlr3:TaskClassif]{mlr3::TaskClassif} one, depending on \code{type}.
 }
 \seealso{
-Other PipeOps: \code{\link{mlr_pipeop_ordinalthresholds}}
+Other PipeOps: \code{\link{mlr_pipeop_ordinalclassif}},
+  \code{\link{mlr_pipeop_ordinalregr}}
 }
 \concept{PipeOps}
 \keyword{datasets}

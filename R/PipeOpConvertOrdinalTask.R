@@ -34,11 +34,13 @@ PipeOpConvertOrdinalTask = R6Class("PipeOpConvertOrdinalTask",
     convert_task_to_regression = function(task) {
       d = task$data()
       d[[task$target_names]] = as.numeric(d[[task$target_names]])
-      TaskRegr$new(id = task$id, backend = as_data_backend(d), target = task$target_names)
+      TaskRegr$new(id = task$id, backend = d, target = task$target_names)
     },
     convert_task_to_classification = function(task) {
       d = task$data()
-      TaskClassif$new(id = task$id, backend = as_data_backend(d), target = task$target_names)
+      target = d[[task$target_names]]
+      d[[task$target_names]] = factor(target, levels = levels(target), ordered = FALSE)
+      TaskClassif$new(id = task$id, backend = d, target = task$target_names)
     }
   )
 )

@@ -43,7 +43,8 @@ register_mlr3 = function() {
 register_mlr3pipelines = function() {
   # pipeops
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
-  x$add("ordinalthresholds", PipeOpOrdinalThresholds)
+  x$add("ordinalregr", PipeOpOrdinalRegr)
+  x$add("ordinalclassif", PipeOpOrdinalClassif)
   x$add("convertordinaltask", PipeOpConvertOrdinalTask)
 }
 
