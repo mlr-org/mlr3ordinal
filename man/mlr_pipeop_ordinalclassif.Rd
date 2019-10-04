@@ -21,8 +21,7 @@ op = po("ordinalclassif")
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_convertordinaltask}},
-  \code{\link{mlr_pipeop_ordinalregr}},
-  \code{\link{mlr_pipeop_ordinalthresholds}}
+  \code{\link{mlr_pipeop_ordinalregr}}
 }
 \concept{PipeOps}
 \keyword{datasets}
