@@ -22,7 +22,7 @@ MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      Metrics::ce(actual = factor(as.character(prediction$truth), levels = l, ordered = TRUE), predicted = prediction$response)
+      Metrics::ce(actual = factor(prediction$truth, levels = l, ordered = TRUE), predicted = prediction$response)
     }
   )
 )

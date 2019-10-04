@@ -23,7 +23,7 @@ MeasureOrdinalMAE = R6Class("MeasureOrdinalMAE",
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
       Metrics::mae(
-        actual = as.integer(factor(as.character(prediction$truth), levels = l, ordered = TRUE)),
+        actual = as.integer(factor(prediction$truth, levels = l, ordered = TRUE)),
         predicted = as.integer(prediction$response)
       )
     }

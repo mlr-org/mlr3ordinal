@@ -14,7 +14,8 @@ Converts an \link{TaskOrdinal} to an \link[mlr3:TaskRegr]{mlr3::TaskRegr} or \li
 }
 \seealso{
 Other PipeOps: \code{\link{mlr_pipeop_ordinalclassif}},
-  \code{\link{mlr_pipeop_ordinalregr}}
+  \code{\link{mlr_pipeop_ordinalregr}},
+  \code{\link{mlr_pipeop_ordinalthresholds}}
 }
 \concept{PipeOps}
 \keyword{datasets}

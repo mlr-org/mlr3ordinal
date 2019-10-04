@@ -22,7 +22,7 @@ MeasureOrdinalACC = R6Class("MeasureOrdinaACC",
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      Metrics::accuracy(actual = factor(as.character(prediction$truth), levels = l, ordered = TRUE), predicted = prediction$response)
+      Metrics::accuracy(actual = factor(prediction$truth, levels = l, ordered = TRUE), predicted = prediction$response)
     }
   )
 )

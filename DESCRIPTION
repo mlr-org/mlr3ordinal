@@ -53,6 +53,7 @@ Collate:
     'PipeOpConvertOrdinalTask.R'
     'PipeOpOrdinalClassif.R'
     'PipeOpOrdinalRegr.R'
+    'PipeOpOrdinalThresholds.R'
     'PipelineOrdinal.R'
     'PredictionOrdinal.R'
     'TaskOrdinal.R'
