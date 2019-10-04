@@ -4,9 +4,9 @@ test_that("Task duplicates rows", {
   task = tsk("winerating")
   expect_task(task)
   expect_task_supervised(task)
-  expect_number(task$rank_n())
 
   expect_is(task$truth(), "ordered")
+  expect_number(task$rank_n)
 
   f = task$formula()
   expect_formula(f)
