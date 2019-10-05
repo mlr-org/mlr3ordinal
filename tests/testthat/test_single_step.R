@@ -1,8 +1,8 @@
 context("single-step")
 
 test_that("single-step", {
-  task = mlr_tasks$get("winerating")
-  learner = mlr_learners$get("ordinal.clm")
+  task = tsk("winerating")
+  learner = lrn("ordinal.clm")
 
   set.seed(123)
   train_ids = sort(sample(1:72, 50))
