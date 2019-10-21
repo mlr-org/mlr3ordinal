@@ -16,7 +16,7 @@ register_mlr3 = function() {
     ~type,     ~package,      ~task,         ~learner,         ~prediction,         ~measure,
     "ordinal", "mlr3ordinal", "TaskOrdinal", "LearnerOrdinal", "PredictionOrdinal", "MeasureOrdinal"
   )), "type")
-  x$task_col_roles$ordinal = c("feature", "target", "order", "groups", "weights")
+  x$task_col_roles$ordinal = c("feature", "target", "order", "group", "weight")
   x$learner_properties$ordinal = x$learner_properties$classif
   x$task_properties$ordinal = c("weights")
   x$learner_properties$ordinal = c("missings", "weights", "parallel", "importance") # FIXME for ordinal
