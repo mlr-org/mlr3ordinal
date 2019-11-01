@@ -24,17 +24,13 @@ Imports:
   ordinal,
   nloptr
 Suggests:
-  Hmisc,
-  lgr,
-  testthat,
   covr,
   evaluate,
-  rpart
-Remotes:
-  mlr-org/mlr3misc,
-  mlr-org/mlr3,
-  mlr-org/mlr3pipelines,
-  mlr-org/paradox
+  Hmisc,
+  lgr,
+  mlr3measures,
+  rpart,
+  testthat
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true

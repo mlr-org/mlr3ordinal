@@ -10,6 +10,6 @@
 MeasureOrdinalCE
 }
 \description{
-Calls \link[Metrics:ce]{Metrics::ce}.
+Calls \link[mlr3measures:ce]{mlr3measures::ce}.
 }
 \keyword{datasets}

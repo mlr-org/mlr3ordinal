@@ -4,7 +4,7 @@
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
-#' Calls [Metrics::ce] for calculating the classification error. Resulting ACC = 1 - CE.
+#' Calls [mlr3measures::ce] for calculating the classification error. Resulting ACC = 1 - CE.
 #'
 #' @export
 #' @include MeasureOrdinal.R
@@ -16,13 +16,14 @@ MeasureOrdinalACC = R6Class("MeasureOrdinaACC",
         id = id,
         range = 0:1,
         minimize = FALSE,
-        packages = "Metrics"
+        packages = "mlr3measures"
       )
     },
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      Metrics::accuracy(actual = factor(prediction$truth, levels = l, ordered = TRUE), predicted = prediction$response)
+      truth = factor(prediction$truth, levels = l, ordered = TRUE)
+      mlr3measures::acc(truth, prediction$response)
     }
   )
 )
