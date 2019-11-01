@@ -4,7 +4,7 @@
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
-#' Calls [Metrics::ce].
+#' Calls [mlr3measures::ce].
 #'
 #' @export
 #' @include MeasureOrdinal.R
@@ -16,13 +16,14 @@ MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
         id = id,
         range = 0:1,
         minimize = TRUE,
-        packages = "Metrics"
+        packages = "mlr3measures"
       )
     },
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      Metrics::ce(actual = factor(prediction$truth, levels = l, ordered = TRUE), predicted = prediction$response)
+      truth = factor(prediction$truth, levels = l, ordered = TRUE)
+      mlr3measures::ce(truth, prediction$response)
     }
   )
 )

@@ -10,6 +10,6 @@
 MeasureOrdinalMAE
 }
 \description{
-Calls \link[Metrics:mae]{Metrics::mae}.
+Calls \link[mlr3measures:mae]{mlr3measures::mae}.
 }
 \keyword{datasets}

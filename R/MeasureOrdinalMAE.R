@@ -4,7 +4,7 @@
 #' @format [R6::R6Class()] inheriting from [MeasureOrdinal].
 #'
 #' @description
-#' Calls [Metrics::mae].
+#' Calls [mlr3measures::mae].
 #'
 #' @export
 #' @include MeasureOrdinal.R
@@ -16,15 +16,15 @@ MeasureOrdinalMAE = R6Class("MeasureOrdinalMAE",
         id = id,
         range = c(0, Inf),
         minimize = TRUE,
-        packages = "Metrics"
+        packages = "mlr3measures"
       )
     },
 
     score_internal = function(prediction, ...) {
       l = levels(prediction$truth)
-      Metrics::mae(
-        actual = as.integer(factor(prediction$truth, levels = l, ordered = TRUE)),
-        predicted = as.integer(prediction$response)
+      mlr3measures::mae(
+        as.integer(prediction$truth),
+        as.integer(prediction$response)
       )
     }
   )

@@ -10,6 +10,6 @@
 MeasureOrdinalACC
 }
 \description{
-Calls \link[Metrics:ce]{Metrics::ce} for calculating the classification error. Resulting ACC = 1 - CE.
+Calls \link[mlr3measures:ce]{mlr3measures::ce} for calculating the classification error. Resulting ACC = 1 - CE.
 }
 \keyword{datasets}
