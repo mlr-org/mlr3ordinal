@@ -34,8 +34,8 @@ TaskOrdinal = R6Class("TaskOrdinal",
       }
     },
 
-    truth = function(row_ids = NULL) {
-      res = self$data(row_ids, cols = self$target_names)[[1L]]
+    truth = function(rows = NULL) {
+      res = self$data(rows, cols = self$target_names)[[1L]]
       as_factor(res, levels = self$rank_names, ordered = TRUE)
     }
   ),
