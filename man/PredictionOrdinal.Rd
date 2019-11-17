@@ -39,11 +39,11 @@ and one row for each observation in the test set.
 \section{Details}{
 
 \itemize{
-\item \code{$new()} initializes a new object of class \link{Prediction}.
-\item \code{$predict_types} (\link{character}) stores the predict types available: a subset of \code{c("response", "prob")}.
-\item \code{$response} stores the predicted values.
+\item \verb{$new()} initializes a new object of class \link{Prediction}.
+\item \verb{$predict_types} (\link{character}) stores the predict types available: a subset of \code{c("response", "prob")}.
+\item \verb{$response} stores the predicted values.
 \item \code{row_ids} stores the row IDs.
-\item \code{$truth} stores the true rank vector.
+\item \verb{$truth} stores the true rank vector.
 \item The prediction object can be transformed to a simple \code{\link[=data.table]{data.table()}}
 with \link[data.table:as.data.table]{data.table::as.data.table}.
 }

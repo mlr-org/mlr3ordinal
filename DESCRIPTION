@@ -35,10 +35,10 @@ ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-Roxygen: list(markdown = TRUE)
+Roxygen: list(markdown = TRUE, r6 = FALSE)
 URL: https://github.com/mlr-org/mlr3ordinal
 BugReports: https://github.com/mlr-org/mlr3ordinal/issues
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Collate:
     'LearnerOrdinal.R'
     'LearnerOrdinalClm.R'

@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Stefan Coors \email{mail@stefancoors.de} (0000-0002-7465-2146)
+\strong{Maintainer}: Stefan Coors \email{mail@stefancoors.de} (\href{https://orcid.org/0000-0002-7465-2146}{ORCID})
 
 Other contributors:
 \itemize{
