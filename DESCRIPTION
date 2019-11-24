@@ -2,42 +2,46 @@ Package: mlr3ordinal
 Title: Ordinal regression for mlr3
 Version: 0.1.0-9000
 Authors@R:
-  c(person(given = "Stefan",
-    family = "Coors",
-    role = c("cre", "aut"),
-    email = "mail@stefancoors.de",
-    comment = c(ORCID = "0000-0002-7465-2146")),
-    person("Michel", "Lang", email = "michellang@gmail.com", role = "ctb"))
-Description: Provides extensions for ordinal regression for mlr3.
-  This includes a specialized task type, models, and measures.
+    c(person(given = "Stefan",
+             family = "Coors",
+             role = c("cre", "aut"),
+             email = "mail@stefancoors.de",
+             comment = c(ORCID = "0000-0002-7465-2146")),
+      person(given = "Michel",
+             family = "Lang",
+             role = "ctb",
+             email = "michellang@gmail.com"))
+Description: Provides extensions for ordinal regression for
+    mlr3.  This includes a specialized task type, models, and measures.
 License: MIT + file LICENSE
+URL: https://mlr3ordinal.mlr-org.com,
+    https://github.com/mlr-org/mlr3ordinal
+BugReports: https://github.com/mlr-org/mlr3ordinal/issues
 Depends:
-  R (>= 3.1.0)
+    R (>= 3.1.0)
 Imports:
-  R6,
-  checkmate,
-  data.table,
-  mlr3,
-  mlr3misc,
-  mlr3pipelines,
-  paradox,
-  ordinal,
-  nloptr
+    checkmate,
+    data.table,
+    mlr3,
+    mlr3misc,
+    mlr3pipelines,
+    nloptr,
+    ordinal,
+    paradox,
+    R6
 Suggests:
-  covr,
-  evaluate,
-  Hmisc,
-  lgr,
-  mlr3measures,
-  rpart,
-  testthat
+    covr,
+    evaluate,
+    Hmisc,
+    lgr,
+    mlr3measures,
+    rpart,
+    testthat
 ByteCompile: true
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE, r6 = FALSE)
-URL: https://github.com/mlr-org/mlr3ordinal
-BugReports: https://github.com/mlr-org/mlr3ordinal/issues
 RoxygenNote: 7.0.0
 Collate:
     'LearnerOrdinal.R'
