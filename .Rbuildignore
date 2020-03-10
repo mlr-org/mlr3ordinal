@@ -9,3 +9,6 @@
 ^man-roxygen$
 ^attic$
 ^pkgdown$
+^\.ccache$
+^\.github$
+^clang-.*
