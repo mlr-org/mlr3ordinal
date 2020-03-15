@@ -3,7 +3,7 @@
 #' @format [R6Class] PipeOpOrdinalRegr
 #'
 #' @name mlr_pipeop_ordinalregr
-#' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpPredPostproc`].
+#' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpTaskPreproc`].
 #'
 #' @description
 #' This PipeOp works for any regression learner.

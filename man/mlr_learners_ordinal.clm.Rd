@@ -4,7 +4,9 @@
 \alias{mlr_learners_ordinal.clm}
 \alias{LearnerOrdinalClm}
 \title{Cumulative Link Model Learner}
-\format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{LearnerOrdinal}.}
+\format{
+\link[R6:R6Class]{R6::R6Class} inheriting from \link{LearnerOrdinal}.
+}
 \description{
 A learner for Cumulative Link Models implemented in \link[ordinal:clm]{ordinal::clm}.
 }

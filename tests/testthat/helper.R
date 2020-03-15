@@ -29,3 +29,8 @@ expect_prediction_ordinal = function(p) {
   expect_prediction(p)
   expect_is(p, "PredictionOrdinal")
 }
+
+lgr::get_logger("mlr3")$set_threshold("warn")
+
+library(checkmate)
+library(data.table)

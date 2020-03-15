@@ -4,7 +4,11 @@
 \alias{mlr_pipeop_ordinalclassif}
 \alias{PipeOpOrdinalClassif}
 \title{PipeOpOrdinalClassif}
-\format{\link{R6Class} PipeOpOrdinalClassif}
+\format{
+\link{R6Class} PipeOpOrdinalClassif
+
+\code{\link[R6:R6Class]{R6::R6Class}} inheriting from \code{\link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}}.
+}
 \description{
 This PipeOp works for any classification learner.
 The idea is to discard the ordinal structure of the target variable and consider the whole task as a \code{\link[mlr3:TaskClassif]{Classification Task}}.

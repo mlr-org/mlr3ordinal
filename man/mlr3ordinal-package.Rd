@@ -6,12 +6,13 @@
 \alias{mlr3ordinal-package}
 \title{mlr3ordinal: Ordinal regression for mlr3}
 \description{
-Provides extensions for ordinal regression for mlr3.
-  This includes a specialized task type, models, and measures.
+Provides extensions for ordinal regression for
+    mlr3.  This includes a specialized task type, models, and measures.
 }
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://mlr3ordinal.mlr-org.com}
   \item \url{https://github.com/mlr-org/mlr3ordinal}
   \item Report bugs at \url{https://github.com/mlr-org/mlr3ordinal/issues}
 }

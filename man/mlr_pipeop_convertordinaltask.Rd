@@ -4,7 +4,9 @@
 \alias{mlr_pipeop_convertordinaltask}
 \alias{PipeOpConvertOrdinalTask}
 \title{PipeOpConvertOrdinalTask}
-\format{\code{\link{R6Class}} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.}
+\format{
+\code{\link{R6Class}} object inheriting from \link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}.
+}
 \description{
 Converts an \link{TaskOrdinal} to an \link[mlr3:TaskRegr]{mlr3::TaskRegr} or \link[mlr3:TaskClassif]{mlr3::TaskClassif} one, depending on \code{type}.
 }

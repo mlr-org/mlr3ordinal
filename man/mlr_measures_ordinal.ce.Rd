@@ -4,7 +4,9 @@
 \alias{mlr_measures_ordinal.ce}
 \alias{MeasureOrdinalCE}
 \title{Mean Misclassification Error Measure}
-\format{\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.}
+\format{
+\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.
+}
 \description{
 Calls \link[mlr3measures:ce]{mlr3measures::ce}.
 }

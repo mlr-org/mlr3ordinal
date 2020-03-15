@@ -18,9 +18,10 @@ NULL
 
 #' @export
 TaskOrdinal = R6Class("TaskOrdinal",
-  inherit = TaskSupervised,
+  inherit = mlr3::TaskSupervised,
   public = list(
     initialize = function(id, backend, target) {
+      assert_string(target)
       super$initialize(id = id, task_type = "ordinal", backend = backend, target = target)
 
       info = self$col_info[id == target]

@@ -3,7 +3,9 @@
 \name{LearnerOrdinal}
 \alias{LearnerOrdinal}
 \title{Ordinal Regression Learner}
-\format{\link{R6Class} object inheriting from \link{Learner}.}
+\format{
+\link{R6Class} object inheriting from \link{Learner}.
+}
 \description{
 This Learner specializes \link{Learner} for ordinal regression tasks.
 }
