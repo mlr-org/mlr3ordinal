@@ -1,6 +1,6 @@
 do_package_checks(error_on = "warning")
 
-if (ci_on_ghactons()) {
+if (ci_on_ghactions()) {
   get_stage("install") %>%
     add_step(step_install_github("mlr-org/mlr3pkgdowntemplate"))
   do_pkgdown()
