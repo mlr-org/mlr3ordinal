@@ -33,3 +33,4 @@ expect_prediction_ordinal = function(p) {
 lgr::get_logger("mlr3")$set_threshold("warn")
 
 library(checkmate)
+library(data.table)
