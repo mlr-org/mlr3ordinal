@@ -3,7 +3,9 @@
 \name{PredictionOrdinal}
 \alias{PredictionOrdinal}
 \title{Prediction Object for Ordinal Regression}
-\format{\link{R6Class} object inheriting from \link{Prediction}.}
+\format{
+\link{R6Class} object inheriting from \link{Prediction}.
+}
 \description{
 This object stores the predictions returned by a learner of class \link{LearnerOrdinal}.
 }

@@ -2,6 +2,13 @@ context("resampling")
 
 test_that("resampling works for ordinal learners", {
   rr = resample(tsk("winerating"), lrn("ordinal.clm"), rsmp("cv"))
+
+  task = tsk("winerating")
+  task2 = task$clone()
+  task2$col_roles$stratum = task2$target_names
+
+  expect_resampling(rr$resampling, task = rr$task)
+  expect_task(rr$task)
   expect_resample_result(rr)
 })
 

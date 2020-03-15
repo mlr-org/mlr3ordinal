@@ -4,7 +4,9 @@
 \alias{mlr_tasks_winerating}
 \alias{load_task_winerating}
 \title{Wine Rating Ordinal Task}
-\format{\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskOrdinal}.}
+\format{
+\link[R6:R6Class]{R6::R6Class} inheriting from \link{TaskOrdinal}.
+}
 \description{
 An ordinal task for the \link[ordinal:wine]{ordinal::wine} data set.
 }

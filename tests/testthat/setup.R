@@ -1,5 +1,3 @@
-lg = lgr::get_logger("mlr3")
-old_threshold = lg$threshold
-lg$set_threshold("warn")
+lgr::get_logger("mlr3")set_threshold("warn")
 
-library(data.table)
+library(checkmate)

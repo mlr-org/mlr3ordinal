@@ -4,7 +4,11 @@
 \alias{mlr_pipeop_ordinalregr}
 \alias{PipeOpOrdinalRegr}
 \title{PipeOpOrdinalRegr}
-\format{\link{R6Class} PipeOpOrdinalRegr}
+\format{
+\link{R6Class} PipeOpOrdinalRegr
+
+\code{\link[R6:R6Class]{R6::R6Class}} inheriting from \code{\link[mlr3pipelines:PipeOpTaskPreproc]{mlr3pipelines::PipeOpTaskPreproc}}.
+}
 \description{
 This PipeOp works for any regression learner.
 The idea is to consider the whole task as a \code{\link[mlr3:TaskRegr]{Regression Task}}.

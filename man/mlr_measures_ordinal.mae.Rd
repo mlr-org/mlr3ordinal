@@ -4,7 +4,9 @@
 \alias{mlr_measures_ordinal.mae}
 \alias{MeasureOrdinalMAE}
 \title{Mean Absolute Error Measure}
-\format{\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.}
+\format{
+\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.
+}
 \description{
 Calls \link[mlr3measures:mae]{mlr3measures::mae}.
 }

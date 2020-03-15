@@ -4,7 +4,9 @@
 \alias{mlr_measures_ordinal_acc}
 \alias{MeasureOrdinalACC}
 \title{Mean Accuracy Measure}
-\format{\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.}
+\format{
+\code{\link[R6:R6Class]{R6::R6Class()}} inheriting from \link{MeasureOrdinal}.
+}
 \description{
 Calls \link[mlr3measures:ce]{mlr3measures::ce} for calculating the classification error. Resulting ACC = 1 - CE.
 }

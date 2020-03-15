@@ -3,7 +3,7 @@
 #' @format [R6Class] PipeOpOrdinalClassif
 #'
 #' @name mlr_pipeop_ordinalclassif
-#' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpPredPostproc`].
+#' @format [`R6::R6Class`] inheriting from [`mlr3pipelines::PipeOpTaskPreproc`].
 #'
 #' @description
 #' This PipeOp works for any classification learner.

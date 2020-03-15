@@ -3,7 +3,9 @@
 \name{MeasureOrdinal}
 \alias{MeasureOrdinal}
 \title{Ordinal Regression Measure}
-\format{\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3:Measure]{mlr3::Measure}.}
+\format{
+\link[R6:R6Class]{R6::R6Class} object inheriting from \link[mlr3:Measure]{mlr3::Measure}.
+}
 \description{
 This measure specializes \link[mlr3:Measure]{mlr3::Measure} for ordinal regression problems.
 Predefined measures can be found in the \link[mlr3misc:Dictionary]{mlr3misc::Dictionary} \link[mlr3:mlr_measures]{mlr3::mlr_measures}.

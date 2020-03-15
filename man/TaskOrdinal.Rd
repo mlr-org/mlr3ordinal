@@ -3,7 +3,9 @@
 \name{TaskOrdinal}
 \alias{TaskOrdinal}
 \title{Ordinal Task}
-\format{\link{R6Class} object inheriting from \link[mlr3:Task]{mlr3::Task}/\link[mlr3:TaskSupervised]{mlr3::TaskSupervised}.}
+\format{
+\link{R6Class} object inheriting from \link[mlr3:Task]{mlr3::Task}/\link[mlr3:TaskSupervised]{mlr3::TaskSupervised}.
+}
 \description{
 This task specializes \link[mlr3:Task]{mlr3::Task} and \link[mlr3:TaskSupervised]{mlr3::TaskSupervised} for ordinal regression problems.
 }
