@@ -58,7 +58,7 @@ The task_type is set to &quot;ordinal&quot;." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +73,7 @@ The task_type is set to &quot;ordinal&quot;." />
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr3ordinal <small>v0.1.0.9000</small></a>
+        <a class="navbar-brand" href="../index.html">mlr3ordinal <small>v0.1.0-9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -93,7 +93,7 @@ The task_type is set to &quot;ordinal&quot;." />
   </a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr3ordinal">
+  <a href="https://github.com/mlr-org/mlr3ordinal/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -148,9 +148,8 @@ Predefined measures can be found in the <a href='https://mlr3misc.mlr-org.com/re
     <h2 class="hasAnchor" id="construction"><a class="anchor" href="#construction"></a>Construction</h2>
 
     
-<pre>m = MeasureOrdinal$new(id, range, minimize, predict_type = "response",
-     task_properties = character(0L), packages = character(0L))
-</pre>
+<pre><span class='no'>m</span> <span class='kw'>=</span> <span class='no'>MeasureOrdinal</span>$<span class='fu'>new</span>(<span class='no'>id</span>, <span class='no'>range</span>, <span class='no'>minimize</span>, <span class='kw'>predict_type</span> <span class='kw'>=</span> <span class='st'>"response"</span>,
+     <span class='kw'>task_properties</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>), <span class='kw'>packages</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0L</span>))</pre>
 
 <p>For a description of the arguments, see <a href='https://mlr3.mlr-org.com/reference/Measure.html'>mlr3::Measure</a>.
 The <code>task_type</code> is set to <code>"ordinal"</code>.
@@ -170,16 +169,10 @@ Possible values for <code>predict_types</code> is "response" and "prob".</p>
     <div class='dont-index'><p>Example ordinal measure: <code><a href='mlr_measures_ordinal.ce.html'>ordinal.ce</a></code>.</p></div>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#format">Format</a></li>
-      <li><a href="#construction">Construction</a></li>
-      <li><a href="#fields">Fields</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#see-also">See also</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -190,7 +183,7 @@ Possible values for <code>predict_types</code> is "response" and "prob".</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -56,7 +56,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +71,7 @@
 
       <div class="navbar-brand-container">
         <a href="https://mlr-org.com"><img src="https://raw.githubusercontent.com/mlr-org/mlr3/master/man/figures/logo.png" id="hexlogo" alt="mlr-org" /></a>
-        <a class="navbar-brand" href="../index.html">mlr3ordinal <small>v0.1.0.9000</small></a>
+        <a class="navbar-brand" href="../index.html">mlr3ordinal <small>v0.1.0-9000</small></a>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -91,7 +91,7 @@
   </a>
 </li>
         <li>
-  <a href="https://github.com/mlr-org/mlr3ordinal">
+  <a href="https://github.com/mlr-org/mlr3ordinal/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -145,17 +145,16 @@
 
     
 
-<p>Inherits from <a href='https://mlr3.mlr-org.com/reference/Prediction.html'>Prediction</a></p><pre># Construction
-p = PredictionOrdinal$new(task, response, prob)
+<p>Inherits from <a href='https://mlr3.mlr-org.com/reference/Prediction.html'>Prediction</a></p><pre><span class='co'># Construction</span>
+<span class='no'>p</span> <span class='kw'>=</span> <span class='no'>PredictionOrdinal</span>$<span class='fu'>new</span>(<span class='no'>task</span>, <span class='no'>response</span>, <span class='no'>prob</span>)
 
-# Members
-p$predict_types
-p$row_ids
-p$truth
+<span class='co'># Members</span>
+<span class='no'>p</span>$<span class='no'>predict_types</span>
+<span class='no'>p</span>$<span class='no'>row_ids</span>
+<span class='no'>p</span>$<span class='no'>truth</span>
 
-# S3 methods
-as.data.table(p)
-</pre>
+<span class='co'># S3 methods</span>
+<span class='fu'><a href='https://mlr3.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span>(<span class='no'>p</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
 
@@ -200,16 +199,10 @@ with <a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.ht
 #&gt; 5:      5     4        4
 #&gt; 6:      6     4        4</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#format">Format</a></li>
-      <li><a href="#usage">Usage</a></li>
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -220,7 +213,7 @@ with <a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.ht
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
