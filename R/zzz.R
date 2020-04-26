@@ -45,7 +45,6 @@ register_mlr3pipelines = function() {
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("ordinalregr", PipeOpOrdinalRegr)
   x$add("ordinalclassif", PipeOpOrdinalClassif)
-  x$add("convertordinaltask", PipeOpConvertOrdinalTask)
 }
 
 .onLoad = function(libname, pkgname) { # nocov start

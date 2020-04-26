@@ -29,6 +29,7 @@ Imports:
     ordinal,
     paradox,
     R6
+Remotes: mlr-org/mlr3pipelines@ytrafo
 Suggests:
     covr,
     evaluate,
@@ -50,7 +51,6 @@ Collate:
     'MeasureOrdinalACC.R'
     'MeasureOrdinalCE.R'
     'MeasureOrdinalMAE.R'
-    'PipeOpConvertOrdinalTask.R'
     'PipeOpOrdinalClassif.R'
     'PipeOpOrdinalRegr.R'
     'PipelineOrdinal.R'

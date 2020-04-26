@@ -27,3 +27,11 @@ test_that("c", {
   dt = as.data.table(pred)
   expect_data_table(dt, nrow = task$nrow, ncol = 3L, any.missing = FALSE)
 })
+
+test_that("probs", {
+  task = tsk("winerating")
+  learner = lrn("regr.rpart")
+  graph = PipelineOrdinal(learner)
+  glearner = GraphLearner$new(graph, task_type = "ordinal")
+  glearner$predict_type = "prob"
+  })
