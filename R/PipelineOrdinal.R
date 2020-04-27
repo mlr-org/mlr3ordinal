@@ -46,16 +46,21 @@ PipelineOrdinal = function(learner) {
       ) %>>%
       po("ordinalregr", 2) # thresholding on cv predictions
   } else if (learner$task_type == "classif") {
-    pipeline = po("update_target",
-      param_vals = list(
-        trafo = function(x) {map_dtc(x, factor, ordered = FALSE)},
-        new_task_type = learner$task_type,
-        new_target_name = "target_classif",
-        drop_original_target = FALSE
+    pipeline = po("copy", 2) %>>%
+      gunion(
+        graphs = list(
+          po("update_target",
+            param_vals = list(
+              trafo = function(x) {map_dtc(x, factor, ordered = FALSE)},
+              new_task_type = learner$task_type,
+              new_target_name = "target_classif",
+              drop_original_target = FALSE
+            )
+          ) %>>% po("learner", learner),
+          po("nop")
         )
       ) %>>%
-      po("learner", learner) %>>%
-      po("ordinalclassif")  # thresholding on cv predictions
+      po("ordinalclassif", 2)  # thresholding on cv predictions
   }
 
   graph = Graph$new()

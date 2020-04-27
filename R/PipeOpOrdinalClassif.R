@@ -22,29 +22,31 @@ PipeOpOrdinalClassif = R6Class("PipeOpOrdinalClassif",
   public = list(
     measure = NULL,
     threshold = NULL,
-    initialize = function(id = "ordinalclassif", param_vals = list()) {
+    initialize = function(innum, id = "ordinalclassif", param_vals = list()) {
+      assert_int(innum, lower = 1)
       ps = ParamSet$new(params = list(
         ParamUty$new("measure", default = NULL, tags = "train")
       ))
       super$initialize(id, param_vals = param_vals, param_set = ps,
-        input = data.table(name = "input", train = "NULL", predict = "PredictionClassif"),
+        input = data.table(name = mlr3pipelines:::rep_suffix("input", innum), train = "NULL", predict = c("PredictionClassif", "Task")),
         output = data.table(name = "output", train = "NULL", predict = "PredictionOrdinal")
       )
     },
 
-    train = function(input) {
+    train = function(inputs) {
       return(list(NULL))
     },
 
-    predict = function(input) {
-      pred = input[[1]]
-      pred = private$make_prediction_ordinal(pred)
+    predict = function(inputs) {
+      pred = private$make_prediction_ordinal(inputs)
       return(list(pred))
     }),
 
   private = list(
-    make_prediction_ordinal = function(pred) {
-      l = levels(pred$truth)
+    make_prediction_ordinal = function(inputs) {
+      pred = inputs[[1]]
+      task = inputs[[2]]
+      l = task$rank_names
       p = PredictionOrdinal$new(
         row_ids = pred$row_ids,
         truth = factor(pred$truth, levels = l, ordered = TRUE),
