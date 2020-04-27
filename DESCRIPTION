@@ -29,7 +29,7 @@ Imports:
     ordinal,
     paradox,
     R6
-Remotes: mlr-org/mlr3pipelines@ytrafo
+Remotes: mlr-org/mlr3pipelines@ytrafo_drop_levels
 Suggests:
     covr,
     evaluate,
