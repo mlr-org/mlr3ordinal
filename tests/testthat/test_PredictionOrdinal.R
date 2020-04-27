@@ -31,7 +31,7 @@ test_that("c", {
 test_that("probs", {
   task = tsk("winerating")
   learner = lrn("regr.rpart")
-  graph = PipelineOrdinal(learner)
+  graph = ppl("ordinal", learner)
   glearner = GraphLearner$new(graph, task_type = "ordinal")
   glearner$predict_type = "prob"
   })

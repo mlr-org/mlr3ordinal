@@ -47,6 +47,12 @@ register_mlr3pipelines = function() {
   x$add("ordinalclassif", PipeOpOrdinalClassif)
 }
 
+register_mlr3graphs = function() {
+  # pipeops
+  x = utils::getFromNamespace("mlr_graphs", ns = "mlr3pipelines")
+  x$add("ordinal", pipeline_ordinal)
+}
+
 .onLoad = function(libname, pkgname) { # nocov start
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")

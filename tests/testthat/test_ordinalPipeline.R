@@ -2,8 +2,8 @@ context("OrdinalPipeline")
 
 test_that("regression learner", {
   task = tsk("winerating")
-  lrn = lrn("regr.rpart")
-  graph = PipelineOrdinal(lrn)
+  learner = lrn("regr.rpart")
+  graph = ppl("ordinal", learner)
 
   glrn = GraphLearner$new(graph, task_type = "ordinal")
   expect_true(run_experiment(task, glrn)$ok)
@@ -18,8 +18,8 @@ test_that("regression learner", {
 
 test_that("classification learner", {
   task = tsk("winerating")
-  lrn = lrn("classif.rpart")
-  graph = PipelineOrdinal(lrn)
+  learner = lrn("classif.rpart")
+  graph = ppl("ordinal", learner)
   graph$keep_results = TRUE
 
   glrn = GraphLearner$new(graph, task_type = "ordinal")

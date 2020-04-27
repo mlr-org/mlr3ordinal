@@ -15,7 +15,7 @@
 #' library(mlr3pipelines)
 #' task = tsk("winerating")
 #' learner = lrn("regr.rpart")
-#' graph = PipelineOrdinal(learner)
+#' graph = ppl("ordinal", learner)
 #' glearner = GraphLearner$new(graph, task_type = "ordinal")
 #' resampling = rsmp("cv")
 #'
@@ -28,7 +28,7 @@
 #'
 #' # retrieve performance
 #' rr$aggregate(msr("ordinal.ce"))
-PipelineOrdinal = function(learner) {
+pipeline_ordinal = function(learner) {
   assert_learner(learner)
   if (learner$task_type == "regr") {
     pipeline = po("copy", 2) %>>%
