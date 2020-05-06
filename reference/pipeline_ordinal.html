@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ordinal Regression Pipeline — PipelineOrdinal • mlr3ordinal</title>
+<title>Ordinal Regression Pipeline — pipeline_ordinal • mlr3ordinal</title>
 
 
 <!-- jquery -->
@@ -40,7 +40,7 @@
 
 
 
-<meta property="og:title" content="Ordinal Regression Pipeline — PipelineOrdinal" />
+<meta property="og:title" content="Ordinal Regression Pipeline — pipeline_ordinal" />
 <meta property="og:description" content="Creates a graph of an ordinal regression pipeline for a regression or classification learner" />
 <meta name="twitter:card" content="summary" />
 
@@ -132,15 +132,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Ordinal Regression Pipeline</h1>
-    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr3ordinal/blob/master/R/PipelineOrdinal.R'><code>R/PipelineOrdinal.R</code></a></small>
-    <div class="hidden name"><code>PipelineOrdinal.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/mlr-org/mlr3ordinal/blob/master/R/pipeline_ordinal.R'><code>R/pipeline_ordinal.R</code></a></small>
+    <div class="hidden name"><code>pipeline_ordinal.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Creates a graph of an ordinal regression pipeline for a regression or classification learner</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PipelineOrdinal</span>(<span class='no'>learner</span>)</pre>
+    <pre class="usage"><span class='fu'>pipeline_ordinal</span>(<span class='no'>learner</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,7 +161,7 @@ The resulting graph can used as <code><a href='https://mlr3pipelines.mlr-org.com
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlr3pipelines</span>)
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span>(<span class='st'>"winerating"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>lrn</a></span>(<span class='st'>"regr.rpart"</span>)
-<span class='no'>graph</span> <span class='kw'>=</span> <span class='fu'>PipelineOrdinal</span>(<span class='no'>learner</span>)
+<span class='no'>graph</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3pipelines.mlr-org.com//reference/ppl.html'>ppl</a></span>(<span class='st'>"ordinal"</span>, <span class='no'>learner</span>)
 <span class='no'>glearner</span> <span class='kw'>=</span> <span class='no'>GraphLearner</span>$<span class='fu'>new</span>(<span class='no'>graph</span>, <span class='kw'>task_type</span> <span class='kw'>=</span> <span class='st'>"ordinal"</span>)
 <span class='no'>resampling</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>rsmp</a></span>(<span class='st'>"cv"</span>)
 
@@ -172,7 +172,7 @@ The resulting graph can used as <code><a href='https://mlr3pipelines.mlr-org.com
 <span class='no'>rr</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/resample.html'>resample</a></span>(<span class='no'>task</span>, <span class='no'>glearner</span>, <span class='no'>resampling</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>rr</span>)</div><div class='output co'>#&gt; &lt;ResampleResult&gt; of 10 iterations
 #&gt; * Task: winerating
-#&gt; * Learner: copy.convertordinaltask.nop.regr.rpart.ordinalregr
+#&gt; * Learner: copy.update_target.nop.regr.rpart.ordinalregr
 #&gt; * Warnings: 0 in 0 iterations
 #&gt; * Errors: 0 in 0 iterations</div><div class='input'>
 <span class='co'># retrieve performance</span>

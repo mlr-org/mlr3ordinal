@@ -10,9 +10,6 @@
     <loc>https://mlr3ordinal.mlr-org.com/reference/MeasureOrdinal.html</loc>
   </url>
   <url>
-    <loc>https://mlr3ordinal.mlr-org.com/reference/PipelineOrdinal.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3ordinal.mlr-org.com/reference/PredictionOrdinal.html</loc>
   </url>
   <url>
@@ -34,9 +31,6 @@
     <loc>https://mlr3ordinal.mlr-org.com/reference/mlr_measures_ordinal_acc.html</loc>
   </url>
   <url>
-    <loc>https://mlr3ordinal.mlr-org.com/reference/mlr_pipeop_convertordinaltask.html</loc>
-  </url>
-  <url>
     <loc>https://mlr3ordinal.mlr-org.com/reference/mlr_pipeop_ordinalclassif.html</loc>
   </url>
   <url>
@@ -44,5 +38,8 @@
   </url>
   <url>
     <loc>https://mlr3ordinal.mlr-org.com/reference/mlr_tasks_winerating.html</loc>
+  </url>
+  <url>
+    <loc>https://mlr3ordinal.mlr-org.com/reference/pipeline_ordinal.html</loc>
   </url>
 </urlset>
