@@ -68,20 +68,20 @@ PipeOpOrdinalRegr = R6Class("PipeOpOrdinalRegr",
     },
 
     optimize_objfun = function(pred) {
-      # browser()
       requireNamespace("nloptr")
       pv = self$param_set$values
       opts = pv[which(!(names(pv) %in% c("measure")))]
       ranks = levels(pred$truth)
       nranks = length(ranks)
-      start = c(as.numeric(ranks)[- nranks] + 0.5)
+      ordered_ranks = factor(ranks, ordered = TRUE)
+      start = c(as.numeric(ordered_ranks)[- nranks] + 0.5)
       constr_fun = function(x, pred) {
         - diff(x)
       }
       or = nloptr::nloptr(
         x0 = start, eval_f = private$objfun, pred = pred, eval_g_ineq = constr_fun,
-        lb = as.numeric(rep(min(pred$truth), nlevels(pred$truth) - 1)),
-        ub = as.numeric(rep(max(pred$truth), nlevels(pred$truth) - 1)),
+        lb = as.numeric(rep(1, nranks - 1)),
+        ub = as.numeric(rep(nranks, nranks - 1)),
         opts = opts
       )
       th = or$solution

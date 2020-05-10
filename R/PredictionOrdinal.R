@@ -92,7 +92,6 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
       # if (!is.matrix(self$data$prob) && !is.numeric(self$data$response)) {
       #   stopf("Cannot set threshold, no probabilities available or response is not numeric")
       # }
-
       if (!is.null(self$data$prob)) {
         if (!is.matrix(self$data$prob)) {
           stopf("Cannot set threshold, no probabilities available")
@@ -122,7 +121,11 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
           stopf("For numeric response, original rank labels are needed")
         }
         res = private$set_ranks_ordinal(self$data$tab$response, threshold)
-        self$data$tab$response = factor(res, levels = ranks, ordered = TRUE)
+        if (is.na(as.numeric(ranks))) {
+          self$data$tab$response = factor(res, labels = ranks, ordered = TRUE)
+        } else {
+          self$data$tab$response = factor(res, levels = ranks, ordered = TRUE)
+        }
       }
       self
     }
