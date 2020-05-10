@@ -15,7 +15,7 @@
 #' library(mlr3pipelines)
 #' task = tsk("winerating")
 #' learner = lrn("regr.rpart")
-#' graph = PipelineOrdinal(learner)
+#' graph = ppl("ordinal", learner)
 #' glearner = GraphLearner$new(graph, task_type = "ordinal")
 #' resampling = rsmp("cv")
 #'
@@ -28,21 +28,32 @@
 #'
 #' # retrieve performance
 #' rr$aggregate(msr("ordinal.ce"))
-PipelineOrdinal = function(learner) {
+pipeline_ordinal = function(learner) {
   assert_learner(learner)
   if (learner$task_type == "regr") {
     pipeline = po("copy", 2) %>>%
       gunion(
         graphs = list(
-          po("convertordinaltask", type = learner$task_type) %>>% po("learner_cv", learner),  # convert task and crossvalidated predictions
+          po("update_target",
+            param_vals = list(
+              trafo = function(x) {map_dtc(x, as.numeric)},
+              new_task_type = learner$task_type,
+              new_target_name = "target_regr"
+              )
+            ) %>>% po("learner_cv", learner),  # convert task and crossvalidated predictions
           po("nop")
         ) # nichts passiert in branch 2
       ) %>>%
       po("ordinalregr", 2) # thresholding on cv predictions
   } else if (learner$task_type == "classif") {
-    pipeline = po("convertordinaltask", type = learner$task_type) %>>%
-      po("learner", learner) %>>%
-      po("ordinalclassif")  # thresholding on cv predictions
+    pipeline =  po("update_target",
+        param_vals = list(
+          trafo = function(x) {map_dtc(x, function(x) {factor(x , ordered = FALSE, levels = levels(x))})},
+          new_task_type = learner$task_type,
+          new_target_name = "target_classif"
+        )
+      ) %>>% po("learner", learner) %>>%
+      po("ordinalclassif")
   }
 
   graph = Graph$new()

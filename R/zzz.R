@@ -45,14 +45,20 @@ register_mlr3pipelines = function() {
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
   x$add("ordinalregr", PipeOpOrdinalRegr)
   x$add("ordinalclassif", PipeOpOrdinalClassif)
-  x$add("convertordinaltask", PipeOpConvertOrdinalTask)
+}
+
+register_mlr3graphs = function() {
+  # pipeops
+  x = utils::getFromNamespace("mlr_graphs", ns = "mlr3pipelines")
+  x$add("ordinal", pipeline_ordinal)
 }
 
 .onLoad = function(libname, pkgname) { # nocov start
   register_mlr3()
   setHook(packageEvent("mlr3", "onLoad"), function(...) register_mlr3(), action = "append")
   register_mlr3pipelines()
-  setHook(packageEvent("mlr3pipelines", "onLoad"), function(...) register_mlr3pipelines(), action = "append")
+  register_mlr3graphs()
+  setHook(packageEvent("mlr3pipelines", "onLoad"), function(...) {register_mlr3pipelines(); register_mlr3graphs()}, action = "append")
 } # nocov end
 
 .onUnload = function(libpath) { # nocov start

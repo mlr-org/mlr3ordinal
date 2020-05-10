@@ -32,19 +32,20 @@ PipeOpOrdinalClassif = R6Class("PipeOpOrdinalClassif",
       )
     },
 
-    train = function(input) {
+    train = function(inputs) {
       return(list(NULL))
     },
 
-    predict = function(input) {
-      pred = input[[1]]
-      pred = private$make_prediction_ordinal(pred)
+    predict = function(inputs) {
+      pred = private$make_prediction_ordinal(inputs)
       return(list(pred))
     }),
 
   private = list(
-    make_prediction_ordinal = function(pred) {
-      l = levels(pred$truth)
+    make_prediction_ordinal = function(inputs) {
+      pred = inputs[[1]]
+      # task = inputs[[2]]
+      l = levels(pred$response)
       p = PredictionOrdinal$new(
         row_ids = pred$row_ids,
         truth = factor(pred$truth, levels = l, ordered = TRUE),
