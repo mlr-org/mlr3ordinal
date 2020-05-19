@@ -121,7 +121,7 @@ PredictionOrdinal = R6Class("PredictionOrdinal",
           stopf("For numeric response, original rank labels are needed")
         }
         res = private$set_ranks_ordinal(self$data$tab$response, threshold)
-        if (is.na(as.numeric(ranks))) {
+        if (is.na(as.numeric(ranks)[1])) {
           self$data$tab$response = factor(res, labels = ranks, ordered = TRUE)
         } else {
           self$data$tab$response = factor(res, levels = ranks, ordered = TRUE)
