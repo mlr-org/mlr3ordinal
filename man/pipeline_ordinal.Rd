@@ -11,7 +11,7 @@ pipeline_ordinal(learner)
 }
 \value{
 \code{\link[mlr3pipelines:Graph]{Graph}}.
-The resulting graph can used as \code{\link[mlr3pipelines:GraphLearner]{GraphLearner}}
+The resulting graph can used as \code{\link[mlr3pipelines:mlr_learners_graph]{GraphLearner}}
 }
 \description{
 Creates a graph of an ordinal regression pipeline for a regression or classification learner

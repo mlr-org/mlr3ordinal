@@ -5,6 +5,6 @@ test_that("benchmark works", {
   rlrn = GraphLearner$new(ppl("ordinal", lrn("regr.rpart")), task_type = "ordinal")
   learners = list(lrn("ordinal.clm"), clrn, rlrn)
   task = tsk("winerating")
-  bmr = benchmark(benchmark_grid(task, learners, rsmp("cv", folds = 3)))
+  bmr = suppressWarnings(benchmark(benchmark_grid(task, learners, rsmp("cv", folds = 3))))
   expect_benchmark_result(bmr)
 })

@@ -21,6 +21,7 @@ op = po("ordinalclassif")
 }
 \seealso{
 Other PipeOps: 
-\code{\link{mlr_pipeop_ordinalregr}}
+\code{\link{mlr_pipeop_ordinalregr}},
+\code{\link{mlr_pipeops_updatetarget}}
 }
 \concept{PipeOps}

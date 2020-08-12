@@ -27,14 +27,17 @@ register_mlr3 = function() {
 
   # tasks
   x = utils::getFromNamespace("mlr_tasks", ns = "mlr3")
+
   x$add("winerating", load_task_winerating)
 
   # learners
   x = utils::getFromNamespace("mlr_learners", ns = "mlr3")
+
   x$add("ordinal.clm", LearnerOrdinalClm)
 
   # measures
   x = utils::getFromNamespace("mlr_measures", ns = "mlr3")
+
   x$add("ordinal.ce", MeasureOrdinalCE)
   x$add("ordinal.acc", MeasureOrdinalACC)
   x$add("ordinal.mae", MeasureOrdinalMAE)
@@ -43,13 +46,16 @@ register_mlr3 = function() {
 register_mlr3pipelines = function() {
   # pipeops
   x = utils::getFromNamespace("mlr_pipeops", ns = "mlr3pipelines")
+
   x$add("ordinalregr", PipeOpOrdinalRegr)
   x$add("ordinalclassif", PipeOpOrdinalClassif)
+  x$add("update_target", PipeOpUpdateTarget)
 }
 
 register_mlr3graphs = function() {
   # pipeops
   x = utils::getFromNamespace("mlr_graphs", ns = "mlr3pipelines")
+
   x$add("ordinal", pipeline_ordinal)
 }
 
