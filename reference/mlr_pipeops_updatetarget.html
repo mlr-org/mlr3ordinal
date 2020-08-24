@@ -154,8 +154,8 @@ drop_original_target the original target is then either dropped or added to the 
 EXPERIMENTAL, API SUBJECT TO CHANGE</p>
 <p>Handles target transformation operations that do not need explicit inversion.
 In case the new target is required during predict, creates a vector of <code>NA</code>.
-Works similar to <code><a href='https://mlr3pipelines.mlr-org.com//reference/PipeOpTargetTrafo.html'>PipeOpTargetTrafo</a></code> and
-<code><a href='https://mlr3pipelines.mlr-org.com//reference/mlr_pipeops_targetmutate.html'>PipeOpTargetMutate</a></code>, but forgoes the
+Works similar to <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/PipeOpTargetTrafo.html'>PipeOpTargetTrafo</a></code> and
+<code><a href='https://rdrr.io/pkg/mlr3pipelines/man/mlr_pipeops_targetmutate.html'>PipeOpTargetMutate</a></code>, but forgoes the
 inversion step.
 In case target after the <code>trafo</code> is a factor, levels are saved to <code>$state</code>.<br /></p>
 <p>During prediction: Sets all target values to <code>NA</code> before calling the <code>trafo</code> again.
@@ -170,7 +170,7 @@ name of the data of the input <code><a href='https://mlr3.mlr-org.com/reference/
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>Abstract <code>R6Class</code> inheriting from <code><a href='https://mlr3pipelines.mlr-org.com//reference/PipeOp.html'>PipeOp</a></code>.</p>
+    <p>Abstract <code>R6Class</code> inheriting from <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/PipeOp.html'>PipeOp</a></code>.</p>
     <h2 class="hasAnchor" id="construction"><a class="anchor" href="#construction"></a>Construction</h2>
 
     
@@ -178,7 +178,7 @@ name of the data of the input <code><a href='https://mlr3.mlr-org.com/reference/
   <span class='kw'>param_vals</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='kw'>packages</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(<span class='fl'>0</span>))</pre>
 <ul>
 <li><p><code>id</code> :: <code><a href='https://rdrr.io/r/base/character.html'>character(1)</a></code><br />
-Identifier of resulting object. See <code>$id</code> slot of <code><a href='https://mlr3pipelines.mlr-org.com//reference/PipeOp.html'>PipeOp</a></code>.</p></li>
+Identifier of resulting object. See <code>$id</code> slot of <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/PipeOp.html'>PipeOp</a></code>.</p></li>
 <li><p><code>param_vals</code> :: named <code>list</code><br />
 List of hyperparameter settings, overwriting the hyperparameter settings given in <code>param_set</code>.
 The subclass should have its own <code>param_vals</code> parameter and pass it on to <code>super$initialize()</code>.
@@ -189,7 +189,7 @@ Default <code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>.</p><
 
     
 
-<p>The parameters are the parameters inherited from <code><a href='https://mlr3pipelines.mlr-org.com//reference/PipeOpTargetTrafo.html'>PipeOpTargetTrafo</a></code>, as well as:</p><ul>
+<p>The parameters are the parameters inherited from <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/PipeOpTargetTrafo.html'>PipeOpTargetTrafo</a></code>, as well as:</p><ul>
 <li><p><code>trafo</code> :: <code>function</code><br />
 Transformation function for the target. Should only be a function of the target, i.e., taking a
 single argument. Default is <code>identity</code>.
@@ -213,7 +213,7 @@ Whether to drop the original target column. Default: <code>TRUE</code>.</p></li>
 
     
 
-<p>Only methods inherited from <code><a href='https://mlr3pipelines.mlr-org.com//reference/PipeOp.html'>PipeOp</a></code>.</p>
+<p>Only methods inherited from <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/PipeOp.html'>PipeOp</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other PipeOps: 

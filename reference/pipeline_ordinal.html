@@ -153,15 +153,15 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='https://mlr3pipelines.mlr-org.com//reference/Graph.html'>Graph</a></code>.
-The resulting graph can used as <code><a href='https://mlr3pipelines.mlr-org.com//reference/mlr_learners_graph.html'>GraphLearner</a></code></p>
+    <p><code><a href='https://rdrr.io/pkg/mlr3pipelines/man/Graph.html'>Graph</a></code>.
+The resulting graph can used as <code><a href='https://rdrr.io/pkg/mlr3pipelines/man/mlr_learners_graph.html'>GraphLearner</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlr3</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlr3pipelines</span>)
 <span class='no'>task</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>tsk</a></span>(<span class='st'>"winerating"</span>)
 <span class='no'>learner</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>lrn</a></span>(<span class='st'>"regr.rpart"</span>)
-<span class='no'>graph</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3pipelines.mlr-org.com//reference/ppl.html'>ppl</a></span>(<span class='st'>"ordinal"</span>, <span class='no'>learner</span>)
+<span class='no'>graph</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/mlr3pipelines/man/ppl.html'>ppl</a></span>(<span class='st'>"ordinal"</span>, <span class='no'>learner</span>)
 <span class='no'>glearner</span> <span class='kw'>=</span> <span class='no'>GraphLearner</span>$<span class='fu'>new</span>(<span class='no'>graph</span>, <span class='kw'>task_type</span> <span class='kw'>=</span> <span class='st'>"ordinal"</span>)
 <span class='no'>resampling</span> <span class='kw'>=</span> <span class='fu'><a href='https://mlr3.mlr-org.com/reference/mlr_sugar.html'>rsmp</a></span>(<span class='st'>"cv"</span>)
 
