@@ -150,15 +150,16 @@
     
 
 <p>Inherits from <a href='https://mlr3.mlr-org.com/reference/Prediction.html'>Prediction</a></p><pre><span class='co'># Construction</span>
-<span class='no'>p</span> <span class='kw'>=</span> <span class='no'>PredictionOrdinal</span>$<span class='fu'>new</span>(<span class='no'>task</span>, <span class='no'>response</span>, <span class='no'>prob</span>)
+<span class='kw'>p</span> <span class='op'>=</span> <span class='kw'>PredictionOrdinal</span><span class='op'>$</span><span class='fu'>new</span>(<span class='kw'>task</span>, <span class='kw'>response</span>, <span class='kw'>prob</span>)
 
 <span class='co'># Members</span>
-<span class='no'>p</span>$<span class='no'>predict_types</span>
-<span class='no'>p</span>$<span class='no'>row_ids</span>
-<span class='no'>p</span>$<span class='no'>truth</span>
+<span class='kw'>p</span><span class='op'>$</span><span class='kw'>predict_types</span>
+<span class='kw'>p</span><span class='op'>$</span><span class='kw'>row_ids</span>
+<span class='kw'>p</span><span class='op'>$</span><span class='kw'>truth</span>
 
 <span class='co'># S3 methods</span>
-<span class='fu'><a href='https://mlr3.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span>(<span class='no'>p</span>)</pre>
+<span class='fu'><a href='https://mlr3.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span>(<span class='kw'>p</span>)
+</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
 
@@ -191,11 +192,13 @@ with <a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.ht
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>mlr3</span>)
-<span class='no'>task</span> <span class='kw'>=</span> <span class='no'>mlr_tasks</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"winerating"</span>)
-<span class='no'>learner</span> <span class='kw'>=</span> <span class='no'>mlr_learners</span>$<span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"ordinal.clm"</span>)
-<span class='no'>p</span> <span class='kw'>=</span> <span class='no'>learner</span>$<span class='fu'>train</span>(<span class='no'>task</span>)$<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='no'>task</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: (1) Hessian is numerically singular: parameters are not uniquely determined </span>
-#&gt; <span class='warning'>In addition: Absolute convergence criterion was met, but relative criterion was not met</span></div><div class='output co'>#&gt; <span class='warning'>Warning: predictions from column rank-deficient fit may be misleading</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://mlr3.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span>(<span class='no'>p</span>))</div><div class='output co'>#&gt;    row_id truth response
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://mlr3.mlr-org.com'>mlr3</a></span>)
+<span class='kw'>task</span> <span class='op'>=</span> <span class='kw'>mlr_tasks</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"winerating"</span>)
+<span class='kw'>learner</span> <span class='op'>=</span> <span class='kw'>mlr_learners</span><span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"ordinal.clm"</span>)
+<span class='kw'>p</span> <span class='op'>=</span> <span class='kw'>learner</span><span class='op'>$</span><span class='fu'>train</span>(<span class='kw'>task</span>)<span class='op'>$</span><span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>task</span>)
+</div><div class='output co'>#&gt; <span class='warning'>Warning: (1) Hessian is numerically singular: parameters are not uniquely determined </span>
+#&gt; <span class='warning'>In addition: Absolute convergence criterion was met, but relative criterion was not met</span></div><div class='output co'>#&gt; <span class='warning'>Warning: predictions from column rank-deficient fit may be misleading</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://mlr3.mlr-org.com/reference/as.data.table.html'>as.data.table</a></span>(<span class='kw'>p</span>))
+</div><div class='output co'>#&gt;    row_id truth response
 #&gt; 1:      1     2        2
 #&gt; 2:      2     3        3
 #&gt; 3:      3     3        3
@@ -217,7 +220,7 @@ with <a href='https://Rdatatable.gitlab.io/data.table/reference/as.data.table.ht
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
 </div>
 
       </footer>
