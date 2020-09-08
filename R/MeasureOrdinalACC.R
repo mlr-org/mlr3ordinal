@@ -18,9 +18,12 @@ MeasureOrdinalACC = R6Class("MeasureOrdinaACC",
         minimize = FALSE,
         packages = "mlr3measures"
       )
-    },
+    }
+  ),
 
-    score_internal = function(prediction, ...) {
+  private = list(
+
+    .score = function(prediction, ...) {
       l = levels(prediction$truth)
       truth = factor(prediction$truth, levels = l, ordered = TRUE)
       mlr3measures::acc(truth, prediction$response)

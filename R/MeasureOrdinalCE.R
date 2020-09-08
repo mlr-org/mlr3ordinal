@@ -18,9 +18,11 @@ MeasureOrdinalCE = R6Class("MeasureOrdinalCE",
         minimize = TRUE,
         packages = "mlr3measures"
       )
-    },
+    }
+  ),
 
-    score_internal = function(prediction, ...) {
+  private = list(
+    .score = function(prediction, ...) {
       l = levels(prediction$truth)
       truth = factor(prediction$truth, levels = l, ordered = TRUE)
       mlr3measures::ce(truth, prediction$response)

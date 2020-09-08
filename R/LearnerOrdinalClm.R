@@ -24,9 +24,12 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
         properties = c("weights"),
         packages = "ordinal"
       )
-    },
+    }
+  ),
 
-    train_internal = function(task) {
+  private = list(
+
+    .train = function(task) {
       pars = self$param_set$get_values(tags ="train")
 
       if ("weights" %in% task$properties) {
@@ -40,7 +43,7 @@ LearnerOrdinalClm = R6Class("LearnerOrdinalClm", inherit = LearnerOrdinal,
       )
     },
 
-    predict_internal = function(task) {
+    .predict = function(task) {
       newdata = task$data(cols = task$feature_names)
       response = prob = NULL
 

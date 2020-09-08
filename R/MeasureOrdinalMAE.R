@@ -18,9 +18,12 @@ MeasureOrdinalMAE = R6Class("MeasureOrdinalMAE",
         minimize = TRUE,
         packages = "mlr3measures"
       )
-    },
+    }
+  ),
 
-    score_internal = function(prediction, ...) {
+  private = list(
+
+    .score = function(prediction, ...) {
       l = levels(prediction$truth)
       mlr3measures::mae(
         as.integer(prediction$truth),
