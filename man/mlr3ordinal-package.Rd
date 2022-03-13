@@ -6,8 +6,7 @@
 \alias{mlr3ordinal-package}
 \title{mlr3ordinal: Ordinal regression for mlr3}
 \description{
-Provides extensions for ordinal regression for
-    mlr3.  This includes a specialized task type, models, and measures.
+Provides extensions for ordinal regression for mlr3. This includes a specialized task type, models, and measures.
 }
 \seealso{
 Useful links:
