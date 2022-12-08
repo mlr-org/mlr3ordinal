@@ -1,4 +1,3 @@
-^tic\.R$
 ^appveyor\.yml$
 .ignore
 .editorconfig
